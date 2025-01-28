@@ -1,14 +1,13 @@
 import * as React from "react"
-type Props = {
-    color:string,
-    className:string
+type props={
+    color:string
 }
-export const Moon = (props:Props) => {
+export const SeeMoreIcon = (props:props) => {
     const {color}=props
   return <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={14}
-    height={14}
+    width={12}
+    height={12}
     fill="none"
     {...props}
   >
@@ -16,7 +15,7 @@ export const Moon = (props:Props) => {
       stroke={color}
       strokeLinecap="round"
       strokeLinejoin="round"
-      d="M7 1a4.243 4.243 0 1 0 6 6 6 6 0 1 1-6-6Z"
+      d="M1.333 6h9.333m0 0L6 1.333M10.666 6 6 10.667"
     />
   </svg>
 }

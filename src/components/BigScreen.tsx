@@ -4,19 +4,42 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  Button
 } from "@/components/ui/index";
-import { Card, CardContent } from "@/components/ui/card";
-import MoviePoster from "@/images/movie03.png";
-
-export const BigScreen = () => {
-  console.log(MoviePoster.src);
-
+import { StarIcon } from "../icons/index";
+type props = {
+  movieInfos:Array<Object>,
+}
+type data={
+  backdrop_path:string,
+  title:string
+}
+export const BigScreen = (props:props) => {
+  const {movieInfos} = props
+  console.log(movieInfos.slice(0,10));
+  movieInfos.slice(0,10).map((el)=>{
+    console.log(el.backdrop_path);
+    
+  })
   return (
     <Carousel className="w-screen h-[600px] border-none relative">
       <CarouselContent className="p-0">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index}>
-            <img className="w-full h-[600px]" src={MoviePoster.src} alt="" />
+        {movieInfos.slice(0,10).map((e:data, index) => (
+          <CarouselItem key={index} className="relative flex items-center justify-center">
+            <img className="w-full h-[600px]" src={`https://image.tmdb.org/t/p/original${e.backdrop_path}`} alt="" />
+            <div className="absolute text-white left-[200px] flex flex-col gap-1">
+              <p>Now Playing:</p>
+              <h1 className="text-2xl truncate w-[200px]"><b>{e.title}</b></h1>
+              <div className="flex items-center gap-3">
+                <StarIcon/>
+                <div className="flex">
+                <p>{e.vote_average}</p>
+                <p className="opacity-70">/10</p>
+                </div>
+              </div>
+              <p className=" w-[350px] h-[300px]">{e.overview}</p>
+              <Button/>
+            </div>
           </CarouselItem>
         ))}
       </CarouselContent>

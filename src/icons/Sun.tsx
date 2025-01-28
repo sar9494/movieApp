@@ -1,10 +1,12 @@
 import * as React from "react"
 type Props = {
-    color:string
+    color:string,
+    className:string,
 }
 export const Sun = (props:Props) => {
     const {color}=props
   return <svg
+
     xmlns="http://www.w3.org/2000/svg"
     width={16}
     height={16}
