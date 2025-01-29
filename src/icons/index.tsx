@@ -7,6 +7,7 @@ export * from "./Message"
 export * from "./PhoneIcon"
 export * from "./StarIcon"
 export * from "./PlayIcon"
+export * from "./RightIcon"
 export * from "./SeeMoreIcon"
 
 

@@ -1,12 +1,12 @@
 "use client";
-import { Header, BigScreen, SectionTwo, Footer } from "@/components";
+import { Header, BigScreen, SectionTwo, Footer,FilterGenre,PopularMovie } from "@/components";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
 export default function Home() {
   const [themes, setThemes] = useState<string>("light");
   const { setTheme } = useTheme();
-  const [upcomingMovie,setUpcomingMovie]= useState<data[]>([])
+  const [upcomingMovie,setUpcomingMovie]= useState([])
   const [popularMovie,setPopular]= useState([])
   const [topMovie,setTop]= useState([])
 
@@ -56,6 +56,12 @@ export default function Home() {
       <SectionTwo name={"Popular"} array={topMovie} themes={themes}/>
       <SectionTwo name={"Top Rated"} array={upcomingMovie} themes={themes}/>
       <Footer />
+      <PopularMovie/>
+      {/* <FilterGenre theme={themes}/> */}
     </div>
   );
 }
+//dynamic route next.js
+//usePharans hook
+//movie folder -> .env [git ruu push hiihgui]
+//   nernii umnu ni nichih NEXT_PUBLIC_API_URL

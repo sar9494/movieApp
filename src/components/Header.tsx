@@ -2,12 +2,15 @@
 
 import { DownIcon, Logo, Sun, Moon, Search } from "../icons/index";
 import { Button, Input } from "./ui/index";
+import { Genres } from "./index";
+import { useState } from "react";
 
 type props = {
   setThemes: Function;
   themes:string
 };
 export const Header = (props: props) => {
+  const [isClick,setIsClick]=useState(false)
   const {themes ,setThemes } = props;
   const onClick = () =>{
     if(themes=="light"){
@@ -15,11 +18,15 @@ export const Header = (props: props) => {
     }else {
     setThemes("light")}
   }
+  const genresClick = () =>{
+    isClick==false?setIsClick(true):setIsClick(false)
+  }
   return (
     <div className="dark:bg-black bg-white w-screen flex items-center justify-around gap-10 p-5 sticky top-0 z-10">
       <Logo color="#4338CA" />
       <div className="flex gap-5">
-        <Button className="dark:text-white text-black border hover:bg-gray-100 bg-white dark:bg-black">
+        <Button className="dark:text-white text-black border hover:bg-gray-100 bg-white dark:bg-black"
+        onClick={genresClick}>
           <DownIcon color={themes=="light"?"black" :"white"} /> Genre
         </Button>
         <div className="flex items-center justify-around border px-2 rounded-lg ">
@@ -38,6 +45,7 @@ export const Header = (props: props) => {
         />
         <span className="sr-only">Toggle theme</span>
       </Button>
+      <Genres theme={themes} className={isClick?"flex absolute left-[585px] p-5 w-[600px]":"hidden"}/>
     </div>
   );
 };

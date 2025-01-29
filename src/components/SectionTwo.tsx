@@ -1,5 +1,6 @@
 import { MovieBox } from "./index";
 import { SeeMoreIcon } from "@/icons/index";
+import { useParams } from 'next/navigation'
 type props = {
   name: string;
   array: Array<Object>;
@@ -7,7 +8,6 @@ type props = {
 };
 export const SectionTwo = (props: props) => {
   const { name, array, themes } = props;
-  console.log(array);
 
   return (
     <div className="flex flex-col w-[1250px] gap-4 overflow-y-auto mt-[50px]">
@@ -27,6 +27,7 @@ export const SectionTwo = (props: props) => {
             title={movie.title}
             url={movie.poster_path}
             rating={movie.vote_average}
+            className="w-[230px]"
           />
         ))}
       </div>

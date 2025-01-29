@@ -12,7 +12,7 @@ export const RightIcon = (props:Props) => {
     {...props}
   >
     <path
-      stroke="#09090B"
+      stroke={color}
       strokeLinecap="round"
       strokeLinejoin="round"
       d="m1 9 4-4-4-4"
