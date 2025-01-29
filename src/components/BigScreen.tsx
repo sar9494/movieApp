@@ -6,7 +6,7 @@ import {
   CarouselPrevious,
   Button
 } from "@/components/ui/index";
-import { StarIcon } from "../icons/index";
+import { StarIcon,PlayIcon } from "../icons/index";
 type props = {
   movieInfos:Array<Object>,
 }
@@ -37,8 +37,12 @@ export const BigScreen = (props:props) => {
                 <p className="opacity-70">/10</p>
                 </div>
               </div>
-              <p className=" w-[350px] h-[300px]">{e.overview}</p>
-              <Button/>
+              <p className=" w-[350px] h-[200px]">{e.overview}</p>
+              <Button className="flex bg-black w-fit">
+                
+                <PlayIcon color="white"/>
+                <p>Watch trailer</p>
+              </Button>
             </div>
           </CarouselItem>
         ))}
