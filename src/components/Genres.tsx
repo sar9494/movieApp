@@ -1,6 +1,9 @@
+'use client'
 import { Button } from "./ui";
-import { RightIcon } from "@/icons/index";
+import { RightIcon ,RemoveIcon } from "@/icons/index";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+
 const GENRES: string[] = [
   "Action",
   "Adventure",
@@ -38,10 +41,15 @@ type genre = {
   name: string;
   id: number;
 };
+type IsClick ={
+  id:number,
+  clicked:boolean
+}
 export const Genres = (props: props) => {
   const { theme, className } = props;
   const [genre, setGenre] = useState<Array<genre>>();
   const [chosenGenre,setChosenGenre] =useState <Array<number>>()
+  const [isClick,setIsClick] = useState<Array<IsClick>>([])
 
   const getMovieInfo = async () => {
     try {
@@ -56,7 +64,9 @@ export const Genres = (props: props) => {
     }
   };
   const onClick = (id:number) => {
-
+    //isClick?setIsClick([...isClick,id:[...id,clicked:false,id:0]]):([...isClick,{clicked:true,id:id}])
+    console.log(isClick);
+    
   };
 
   useEffect(() => {
@@ -65,7 +75,7 @@ export const Genres = (props: props) => {
 
   return (
     <div
-      className={`   gap-3 flex-wrap top-[80px] bg-white dark:bg-black  rounded-xl border flex-col ${className}`}
+      className={` gap-3 flex-wrap top-[80px] bg-white dark:bg-black  rounded-xl border flex-col ${className}`}
     >
       <div>
         <p className="text-3xl">
@@ -76,13 +86,19 @@ export const Genres = (props: props) => {
       </div>
       <div className=" w-full flex gap-3 flex-wrap ">
         {genre?.map((el:genre, index) => (
-          <Button
-            key={index}
-            className="bg-white dark:bg-black w-fit hover:opacity-80 border p-1 flex items-center h-[20px]"
+          <Link href={"/genre"} key={index} onClick={()=>onClick(el.id)}>
+          <Button 
+            className="bg-white dark:bg-black w-fit hover:opacity-80 border p-1 flex items-center justify-center h-[20px]"
+            
           >
             <p className="text-black dark:text-white">{el.name}</p>
-            <RightIcon color={theme == "light" ? "black" : "white"} />
+            {
+              isClick?(<RemoveIcon color="black"/>):(<RightIcon color={theme == "light" ? "black" : "white"} />)
+            }
+            
           </Button>
+          </Link>
+          
         ))}
       </div>
     </div>

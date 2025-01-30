@@ -1,14 +1,15 @@
 "use client";
-import { Header, BigScreen, SectionTwo, Footer,FilterGenre,PopularMovie } from "@/components";
+import { Header, BigScreen, SectionTwo, Footer } from "@/components";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
 export default function Home() {
   const [themes, setThemes] = useState<string>("light");
-  const { setTheme } = useTheme();
+  const { setTheme,theme} = useTheme();
   const [upcomingMovie,setUpcomingMovie]= useState([])
   const [popularMovie,setPopular]= useState([])
   const [topMovie,setTop]= useState([])
+  const [nowPlaying,setNowPlaying]= useState([])
 
 
 
@@ -35,6 +36,12 @@ export default function Home() {
       const resultTop = await responseTop.json();
       
       setTop(resultTop.results)
+      const responseNow = await fetch(
+        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf"
+      );
+      const resultNow = await responseNow.json();
+      
+      setNowPlaying(resultNow.results)
     } catch (e) {
       console.log(e);
     }
@@ -51,13 +58,11 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center gap-5 relative">
       <Header setThemes={setThemes} themes={themes} />
-      <BigScreen movieInfos={upcomingMovie}/>
-      <SectionTwo name={"Upcoming"} array={popularMovie} themes={themes}/>
-      <SectionTwo name={"Popular"} array={topMovie} themes={themes}/>
-      <SectionTwo name={"Top Rated"} array={upcomingMovie} themes={themes}/>
+      <BigScreen movieInfos={nowPlaying}/>
+      <SectionTwo name={"Upcoming"} array={popularMovie} themes={themes} topic="upcoming"/>
+      <SectionTwo name={"Popular"} array={topMovie} themes={themes} topic="popular"/>
+      <SectionTwo name={"Top Rated"} array={upcomingMovie} themes={themes} topic="toprated"/>
       <Footer />
-      <PopularMovie/>
-      {/* <FilterGenre theme={themes}/> */}
     </div>
   );
 }

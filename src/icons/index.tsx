@@ -9,7 +9,7 @@ export * from "./StarIcon"
 export * from "./PlayIcon"
 export * from "./RightIcon"
 export * from "./SeeMoreIcon"
-
+export * from "./RemoveIcon"
 
 
 

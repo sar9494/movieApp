@@ -4,13 +4,14 @@ type props= {
     url:string,
     rating:number,
     title:string,
-    className:string
+    className:string,
+    imgHeigth:string
 }
 export const MovieBox = (props:props) => {
-    const {url,rating,title,className} = props
+    const {url,rating,title,className ,imgHeigth} = props
   return (
     <div className={`h-fit rounded-lg overflow-hidden ${className}`}>
-      <img className="w-full" src={`https://image.tmdb.org/t/p/original${url}`} alt="" />
+      <img className={`w-full ${imgHeigth}`} src={`https://image.tmdb.org/t/p/original${url}`} alt="" />
       <div className="w-full h-[95px] bg-gray-200 p-2 dark:bg-gray-600">
         <div className="flex gap-2 items-center">
           <StarIcon />
