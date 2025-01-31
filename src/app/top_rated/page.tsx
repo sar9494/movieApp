@@ -37,7 +37,7 @@ export default function Home() {
   }, [step]);
   return (
     <div className="flex flex-col gap-5 items-center">
-      <Header themes={theme} setThemes={setTheme} />
+      <Header/>
       <div className="flex flex-wrap w-[1200px] gap-3">
         {movies?.map((el: movie, index) => (
           <MovieBox

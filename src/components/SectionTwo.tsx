@@ -2,12 +2,13 @@ import { MovieBox } from "./index";
 import { SeeMoreIcon } from "@/icons/index";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
+
 
 type props = {
   name: string;
-  array: Array<movie>;
-  themes: string;
-  topic: string;
+  title: string;
 };
 type movie = {
   title: string;
@@ -15,8 +16,28 @@ type movie = {
   vote_average: number;
 };
 export const SectionTwo = (props: props) => {
-  const { name, array, themes, topic } = props;
+  const {theme} =useTheme()
+
+  const { name, title } = props;
+  const [movie,setMovie]= useState<Array<movie>>([])
+
   const router = useRouter();
+  const getMovieInfo = async () => {
+    try {
+      const response1 = await fetch(
+       ` https://api.themoviedb.org/3/movie/${title}?language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
+      );
+      const result1 = await response1.json();
+      
+      setMovie(result1.results)
+
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(()=>{
+    getMovieInfo()
+  },[movie])
 
   return (
     <div className="flex flex-col w-[1250px] gap-4 overflow-y-auto mt-[50px]">
@@ -24,20 +45,17 @@ export const SectionTwo = (props: props) => {
         <h1 className="text-4xl">
           <b>{name}</b>
         </h1>
-        <Link href={`/${topic}`}>
+        <Link href={`/${title}`}>
           <div
             className="flex items-center gap-2"
-            // onClick={() => {
-            //   router.push("/popular");
-            // }}
           >
             <p>See more</p>
-            <SeeMoreIcon color={themes == "light" ? "black" : "white"} />
+            <SeeMoreIcon color={theme == "light" ? "black" : "white"} />
           </div>
         </Link>
       </div>
       <div className="flex shrink-0 flex-wrap w-full gap-6 overflow-y-auto">
-        {array.slice(0, 10).map((movie, index) => (
+        {movie.slice(0, 10).map((movie, index) => (
           <MovieBox
             key={index}
             title={movie.title}

@@ -7,20 +7,38 @@ import {
   Button,
 } from "@/components/ui/index";
 import { StarIcon, PlayIcon } from "../icons/index";
-type props = {
-  movieInfos: Array<movie>;
-};
+import { useEffect, useState } from "react";
+
 type movie = {
   title: string;
   overview: string;
   vote_average: number;
+  backdrop_path:string;
 };
-export const BigScreen = (props: props) => {
-  const { movieInfos } = props;
+export const BigScreen = () => {
+  const [nowPlaying,setNowPlaying]= useState <Array<movie>>([])
+    
+    const getMovieInfo = async () => {
+      try {
+       
+        const responseNow = await fetch(
+          "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf"
+        );
+        const resultNow = await responseNow.json();
+        
+        setNowPlaying(resultNow.results)
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  
+    useEffect(() => {
+      getMovieInfo();
+    }, []);
   return (
     <Carousel className="w-screen h-[600px] border-none relative">
       <CarouselContent className="p-0">
-        {movieInfos.slice(0, 10).map((e, index) => (
+        {nowPlaying.slice(0, 10).map((e, index) => (
           <CarouselItem
             key={index}
             className="relative flex items-center justify-center"
@@ -43,7 +61,7 @@ export const BigScreen = (props: props) => {
                 </div>
               </div>
               <p className=" w-[350px] h-[200px]">{e.overview}</p>
-              <Button className="flex bg-black w-fit">
+              <Button className="flex bg-black w-fit text-white">
                 <PlayIcon color="white" />
                 <p>Watch trailer</p>
               </Button>

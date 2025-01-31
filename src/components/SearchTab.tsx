@@ -1,18 +1,21 @@
 import { StarIcon,SeeMoreIcon} from "../icons/index";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 type props = {
   array: Array<Movie>;
-  themes:string
 };
 type Movie = {
   title: string;
   poster_path: string;
   vote_average: number;
   release_date: string;
+  id:number
 };
 export const SearchTab = (props: props) => {
-  const { array, themes } = props;
+  const { array,  } = props;
+  const {theme} =useTheme()
+  
   return (
     <div className="w-[600px] bg-white dark:bg-black absolute top-[80px]  rounded-xl flex flex-col gap-3 border">
       {array.slice(0, 5).map((el, index) => (
@@ -33,12 +36,12 @@ export const SearchTab = (props: props) => {
               </div>
             </div>
           </div>
-          <Link href={`/`}>
+          <Link href={`/movie/${el.id}`}>
           <div
             className="flex items-center gap-2"
           >
             <p>See more</p>
-            <SeeMoreIcon color={themes == "light" ? "black" : "white"} />
+            <SeeMoreIcon color={theme == "light" ? "black" : "white"} />
           </div>
         </Link>
         </div>

@@ -3,6 +3,7 @@ import { Button } from "./ui";
 import { RightIcon ,RemoveIcon } from "@/icons/index";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 const GENRES: string[] = [
   "Action",
@@ -34,7 +35,6 @@ const GENRES: string[] = [
   "Western",
 ];
 type props = {
-  theme: string;
   className: string;
 };
 type genre = {
@@ -46,10 +46,12 @@ type IsClick ={
   clicked:boolean
 }
 export const Genres = (props: props) => {
-  const { theme, className } = props;
+  const { className } = props;
   const [genre, setGenre] = useState<Array<genre>>();
   const [chosenGenre,setChosenGenre] =useState <Array<number>>()
   const [isClick,setIsClick] = useState<Array<IsClick>>([])
+  const {theme} =useTheme()
+
 
   const getMovieInfo = async () => {
     try {
@@ -93,7 +95,7 @@ export const Genres = (props: props) => {
           >
             <p className="text-black dark:text-white">{el.name}</p>
             {
-              isClick?(<RemoveIcon color="black"/>):(<RightIcon color={theme == "light" ? "black" : "white"} />)
+              isClick?(<RemoveIcon color={theme == "light" ? "black" : "white"}/>):(<RightIcon color={theme == "light" ? "black" : "white"} />)
             }
             
           </Button>
