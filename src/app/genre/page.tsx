@@ -8,6 +8,7 @@ import {
 } from "@/components/index";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
+import { getMoviesInfo,getImage } from "@/utils/requests";
 
 type movie = {
   title: string;
@@ -21,14 +22,10 @@ export default function Home() {
 
   const getMovieInfo = async () => {
     try {
-      const response1 = await fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${step}&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
-      );
-      const result1 = await response1.json();
-      console.log(result1.results);
+      const response1 = await getMoviesInfo(step,"/movie/now_playing")
       
 
-      setUpcomingMovie(result1.results);
+      setUpcomingMovie(response1.data.results);
     } catch (e) {
       console.log(e);
     }

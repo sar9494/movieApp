@@ -9,6 +9,7 @@ export const PlayIcon = (props:props) => {
     width={12}
     height={14}
     fill="none"
+    viewBox="0 0 10 14"
     {...props}
   >
     <path

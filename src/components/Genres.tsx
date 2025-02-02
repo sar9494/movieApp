@@ -4,36 +4,8 @@ import { RightIcon ,RemoveIcon } from "@/icons/index";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { getMoviesInfo,getImage } from "@/utils/requests";
 
-const GENRES: string[] = [
-  "Action",
-  "Adventure",
-  "Animation",
-  "Biography",
-  "Comedy",
-  "Crime",
-  "Documentary",
-  "Drama",
-  "Family",
-  "Fantasy",
-  "Film-Noir",
-  "Game-Show",
-  "History",
-  "Horror",
-  "Music",
-  "Musical",
-  "Mystery",
-  "News",
-  "Reality-TV",
-  "Romance",
-  "Sci-Fi",
-  "Short",
-  "Sport",
-  "Talk-Show",
-  "Thriller",
-  "War",
-  "Western",
-];
 type props = {
   className: string;
 };
@@ -55,12 +27,8 @@ export const Genres = (props: props) => {
 
   const getMovieInfo = async () => {
     try {
-      const response1 = await fetch(
-        "https://api.themoviedb.org/3/genre/movie/list?language=en&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf"
-      );
-      const result1 = await response1.json();
-      setGenre(result1.genres);
-      //   setUpcomingMovie(result1.results)
+      const response1 = await getMoviesInfo(1,"/genre/movie/list")
+      setGenre(response1.data.genres);
     } catch (e) {
       console.log(e);
     }
