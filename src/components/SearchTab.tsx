@@ -36,7 +36,7 @@ export const SearchTab = (props: props) => {
               </div>
             </div>
           </div>
-          <Link href={`/movie/${el.id}`}>
+          <Link href={`/details/${el.id}`}>
           <div
             className="flex items-center gap-2"
           >

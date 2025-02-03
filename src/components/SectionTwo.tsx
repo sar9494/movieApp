@@ -14,6 +14,7 @@ type movie = {
   title: string;
   poster_path: string;
   vote_average: number;
+  id:string | string[] | undefined;
 };
 export const SectionTwo = (props: props) => {
   const {theme} =useTheme()
@@ -45,7 +46,7 @@ export const SectionTwo = (props: props) => {
         <h1 className="text-4xl">
           <b>{name}</b>
         </h1>
-        <Link href={`/${title}`}>
+        <Link href={`/type/${title}`}>
           <div
             className="flex items-center gap-2"
           >
@@ -61,6 +62,7 @@ export const SectionTwo = (props: props) => {
             title={movie.title}
             url={movie.poster_path}
             rating={movie.vote_average}
+            id={movie.id}
             className="w-[230px]"
             imgHeigth="h-[345px]"
           />

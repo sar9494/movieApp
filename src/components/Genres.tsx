@@ -4,7 +4,7 @@ import { RightIcon ,RemoveIcon } from "@/icons/index";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
-import { getMoviesInfo,getImage } from "@/utils/requests";
+import { getMoviesInfo } from "@/utils/requests";
 
 type props = {
   className: string;

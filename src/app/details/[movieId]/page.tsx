@@ -1,12 +1,12 @@
 "use client";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Header, Footer } from "@/components";
+import { Header, Footer, MovieBox } from "@/components";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { StarIcon, PlayIcon, SeeMoreIcon } from "@/icons";
 import { Button } from "@/components/ui";
-import { getImage, getMoviesInfo, getMovieDetailInfo } from "@/utils/requests";
+import { getDetailInfo, getMovieSimilarInfo } from "@/utils/requests";
 type Movie = {
   title: string;
   vote_average: number;
@@ -15,29 +15,44 @@ type Movie = {
   release_date: string;
   runtime: number;
   overview: string;
-  genres: Array<string>;
+  genres: Array<genre>;
   vote_count: number;
+  id: string | string[] | undefined;
+};
+type genre={
+  id:number,
+  name:string
+}
+type cast={
+  name:string
+}
+type team = {
+  name:string
+  cast:Array<cast>
+  crew:Array<cast>
+  videoUrl:string
 };
 export default function Movie() {
-  const { setTheme, theme } = useTheme();
+  const { theme } = useTheme();
   const [movie, setMovie] = useState<Movie>();
-  const [similarMovie, setSimilarMovie] = useState([]);
+  const [similarMovie, setSimilarMovie] = useState<Array<Movie>>();
+  const [team,setTeam] = useState <team>()
   const { movieId } = useParams();
   const getMovieInfo = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
-    );
-    // /movie/${id}/similar?language=en-US&page=1
-    ///movie/now_playing?language=en-US&page=1
-    const result = await response.json();
-    console.log(result);
-    setMovie(result);
-    // const response2 = getMoviesInfo(1, `${movieId}similar`);
-    // console.log((await response2).data);
+    const response = await getDetailInfo(movieId, "");
+    setMovie(response.data);
+    console.log(response.data);
+    
+    const response2 = await getMovieSimilarInfo(movieId, "/similar", 1);
+    setSimilarMovie(response2.data.results);
+    const response3 = await getDetailInfo(movieId, "/videos");
+    console.log(response3.data);
+    
+    const response4 = await getDetailInfo(movieId, "/credits");
+    setTeam(response4.data)
   };
   useEffect(() => {
     getMovieInfo();
-    console.log(movie?.runtime);
   }, []);
   return (
     <div className="flex flex-col items-center justify-center gap-5">
@@ -72,12 +87,12 @@ export default function Movie() {
         <div className="flex gap-10">
           <img
             className="w-[290px] rounded-lg"
-            src={getImage(movie?.poster_path!)}
+            src={`https://image.tmdb.org/t/p/original${movie?.poster_path}`}
             alt=""
           />
           <div className="relative w-full">
             <img
-              src={getImage(movie?.backdrop_path!)}
+              src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
               alt=""
               className="rounded-lg"
             />
@@ -92,31 +107,37 @@ export default function Movie() {
             </div>
           </div>
         </div>
-        {/* <div>
-              {
-                movie?.genres.map((el,index)=>{
-                  <div></div>
-                })
-              }
-            </div> */}
+        <div className="flex gap-3 font-bold">
+          {movie?.genres.map((el, index) => {
+            return <div key={index} className="border w-fit p-1 rounded-2xl">
+              {el.name}
+            </div>;
+          })}
+        </div>
         <p>{movie?.overview}</p>
         <div className="flex border-b-2 py-2">
           <p className="w-[120px]">
             <b>Director</b>
           </p>
-          <p>dood</p>
+          <p>{team?.crew[0].name}</p>
         </div>
         <div className="flex border-b-2 py-2">
           <p className="w-[120px]">
             <b>Writers</b>
           </p>
-          <p>dood</p>
         </div>
         <div className="flex border-b-2 py-2">
           <p className="w-[120px]">
             <b>Stars</b>
           </p>
-          <p>dood</p>
+          <div className="flex gap-3">
+            {team?.cast.slice(0,5).map((el:cast,index:number)=>(
+              <div className="flex gap-3" key={index}>
+              <p key={index}> {el.name}</p>
+              <p>{index!==4&&("·")}</p>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex justify-between items-center">
           <p className="text-[26px] font-semibold">More like this</p>
@@ -127,7 +148,19 @@ export default function Movie() {
             </div>
           </Link>
         </div>
-        <div></div>
+        <div className="flex gap-7">
+          {similarMovie?.slice(0, 5).map((movie, index) => (
+            <MovieBox
+              key={index}
+              url={movie.poster_path}
+              rating={movie.vote_average}
+              title={movie.title}
+              className="w-[200px]"
+              imgHeigth="h-[300px]"
+              id={movie.id}
+            />
+          ))}
+        </div>
       </div>
       <Footer />
     </div>

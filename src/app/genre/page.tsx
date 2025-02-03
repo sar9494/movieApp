@@ -8,12 +8,13 @@ import {
 } from "@/components/index";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { getMoviesInfo,getImage } from "@/utils/requests";
+import { getMoviesInfo } from "@/utils/requests";
 
 type movie = {
   title: string;
   poster_path: string;
   vote_average: number;
+  id: string | string[] | undefined;
 };
 export default function Home() {
   const {  theme } = useTheme();
@@ -51,6 +52,7 @@ export default function Home() {
               title={el.title}
               url={el.poster_path}
               rating={el.vote_average}
+              id={el.id}
               className="w-[165px]"
             imgHeigth="h-[205px]"
             />

@@ -6,6 +6,7 @@ import { Genres } from "./index";
 import { useEffect, useState } from "react";
 import { SearchTab } from "../components/index";
 import { useTheme } from "next-themes";
+import Link from "next/link";
 
 type props = {
   setThemes: Function;
@@ -48,7 +49,9 @@ export const Header = () => {
   }
   return (
     <div className="dark:bg-black bg-white w-screen flex items-center justify-around gap-10 p-5 sticky top-0 z-10">
+      <Link href={"/"}>
       <Logo color="#4338CA" />
+      </Link>
       <div className="flex gap-5 relative">
         <Button className="dark:text-white text-black border hover:bg-gray-100 bg-white dark:bg-black"
         onClick={genresClick}>
