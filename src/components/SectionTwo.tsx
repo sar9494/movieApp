@@ -38,7 +38,7 @@ export const SectionTwo = (props: props) => {
   };
   useEffect(()=>{
     getMovieInfo()
-  },[movie])
+  },[])
 
   return (
     <div className="flex flex-col w-[1250px] gap-4 overflow-y-auto mt-[50px]">

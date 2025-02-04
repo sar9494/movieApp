@@ -141,7 +141,7 @@ export default function Movie() {
         </div>
         <div className="flex justify-between items-center">
           <p className="text-[26px] font-semibold">More like this</p>
-          <Link href={`/`}>
+          <Link href={`/details/${movieId}/similar`}>
             <div className="flex items-center gap-2">
               <p>See more</p>
               <SeeMoreIcon color={theme == "light" ? "black" : "white"} />

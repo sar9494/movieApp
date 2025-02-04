@@ -19,7 +19,9 @@ export const SearchTab = (props: props) => {
   return (
     <div className="w-[600px] bg-white dark:bg-black absolute top-[80px]  rounded-xl flex flex-col gap-3 border">
       {array.slice(0, 5).map((el, index) => (
-        <div key={index} className=" rounded flex gap-3 p-3 justify-between items-center">
+
+<Link href={`/details/${el.id}`} key={index}>
+        <div  className=" rounded flex gap-3 p-3 justify-between items-center">
           <div className="flex gap-3  ">
             <img
               className="w-[80px] h-[100px] rounded-xl"
@@ -36,15 +38,14 @@ export const SearchTab = (props: props) => {
               </div>
             </div>
           </div>
-          <Link href={`/details/${el.id}`}>
           <div
             className="flex items-center gap-2"
           >
             <p>See more</p>
             <SeeMoreIcon color={theme == "light" ? "black" : "white"} />
           </div>
-        </Link>
         </div>
+        </Link>
       ))}
     </div>
   );
