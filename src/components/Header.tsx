@@ -8,17 +8,6 @@ import { SearchTab } from "../components/index";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
-type props = {
-  setThemes: Function;
-  themes:string
-};
-// type Movie = {
-//   title:string,
-//   poster_path:string,
-//   vote_average:number,
-// release_date:string,
-// id:number
-// }
 export const Header = () => {
   const {setTheme,theme} =useTheme()
   const [isClick,setIsClick]=useState(false)

@@ -1,45 +1,20 @@
 "use client";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Header, Footer, MovieBox ,UsePagination} from "@/components";
+import { Header, Footer, MovieBox, UsePagination } from "@/components";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { getDetailInfo, getMovieSimilarInfo } from "@/utils/requests";
-type Movie = {
-  title: string;
-  vote_average: number;
-  poster_path: string;
-  backdrop_path: string;
-  release_date: string;
-  runtime: number;
-  overview: string;
-  genres: Array<genre>;
-  vote_count: number;
-  id: string | string[] | undefined;
-};
-type genre={
-  id:number,
-  name:string
-}
-type cast={
-  name:string
-}
-type team = {
-  name:string
-  cast:Array<cast>
-  crew:Array<cast>
-  videoUrl:string
-};
+import { MovieType } from "../page";
+
 export default function Movie() {
   const { theme } = useTheme();
-  const [similarMovie, setSimilarMovie] = useState<Array<Movie>>();
+  const [similarMovie, setSimilarMovie] = useState<Array<MovieType>>();
   const { movieId } = useParams();
-  const [step,setStep] = useState(1)
+  const [step, setStep] = useState(1);
   const getMovieInfo = async () => {
-    
     const response2 = await getMovieSimilarInfo(movieId, "/similar", step);
     setSimilarMovie(response2.data.results);
-    
   };
   useEffect(() => {
     getMovieInfo();
@@ -65,7 +40,7 @@ export default function Movie() {
           ))}
         </div>
       </div>
-      <UsePagination step={step} setStep={setStep}/>
+      <UsePagination step={step} setStep={setStep} />
       <Footer />
     </div>
   );

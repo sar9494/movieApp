@@ -24,8 +24,6 @@ export default function Home() {
   const getMovieInfo = async () => {
     try {
       const response1 = await getMoviesInfo(step,"/movie/now_playing")
-      
-
       setUpcomingMovie(response1.data.results);
     } catch (e) {
       console.log(e);
