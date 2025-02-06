@@ -2,13 +2,12 @@
 import { Button } from "./ui";
 import { RightIcon, RemoveIcon } from "@/icons/index";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useTheme } from "next-themes";
 import { getMoviesInfo } from "@/utils/requests";
-import { useParams ,useRouter , useSearchParams} from "next/navigation";
-import { log } from "console";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 type props = {
   className: string;
+  pageName:string;
 };
 type genre = {
   name: string;
@@ -19,14 +18,14 @@ type IsClick = {
   clicked: boolean;
 };
 export const Genres = (props: props) => {
-  const { className } = props;
+  const { className ,pageName} = props;
   const [genre, setGenre] = useState<Array<genre>>();
   // const [chosenGenres, setChosenGenres] = useState<Array<number>>([]);
   const [isClick, setIsClick] = useState<Array<IsClick>>([]);
   const { theme } = useTheme();
-  const router=useRouter()
-  const searchParams= useSearchParams();
-  let chosenGenres=(searchParams.get("genreslds")||"").split(",")
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  let chosenGenres = (searchParams.get("genreslds") || "").split(",");
 
   const getMovieInfo = async () => {
     try {
@@ -37,42 +36,22 @@ export const Genres = (props: props) => {
     }
   };
 
-  // console.log(chosenGenres.length);
-  
-  const onClick = (id: string) => {
-    const params = new URLSearchParams(searchParams)
-    let counter=0
-    chosenGenres.map((el,index)=>{
-      if(el!=""&&!el.includes(id)){
-        counter++
-      }
-      else{
-        const newChosen=chosenGenres.map((el)=>{
-          if(!el.includes(id)){
-            return el
-          }
-        })
-        // chosenGenres=newChosen
-        console.log(newChosen);
-        
-      }
-    })
-    if(counter+1!==chosenGenres.length){
-      chosenGenres.push(id)
-    params.set("genreslds",chosenGenres.join(","))
-    router.push(`/genre?${params.toString()}`)
-    console.log(chosenGenres);
 
+  const onClick = (id: string) => {
+    const params = new URLSearchParams(searchParams);
+    chosenGenres=chosenGenres.filter((el)=>el!="")
+    let newGenre = chosenGenres.join(",");
+    if (newGenre.includes(id)) {
+      chosenGenres = newGenre.split(`${id}`).join("").split(",");
+    chosenGenres=chosenGenres.filter((el)=>el!="")
+
+    } else {
+      chosenGenres.push(id);
     }
-      
-    // console.log(chosenGenres);
-    
-    // chosenGenres.push(id)
-    // params.set("genreslds",chosenGenres.join(","))
-    // router.push(`/genre?${params.toString()}`)
-    //   console.log(id);
+    params.set("genreslds", chosenGenres.join(","));
+    router.push(`/${pageName}?${params.toString()}`);
+
   };
-  
 
   useEffect(() => {
     getMovieInfo();
@@ -91,20 +70,18 @@ export const Genres = (props: props) => {
       </div>
       <div className=" w-full flex gap-3 flex-wrap ">
         {genre?.map((el: genre, index) => (
-          // <Link
-          //   href={`/genre?=${el.id}`}
-          //   key={index}
-          //   onClick={() => onClick(el.id)}
-          // >
-            <Button key={index}  onClick={() => onClick(el.id)} className="bg-white dark:bg-black w-fit hover:opacity-80 border p-1 flex items-center justify-center h-[20px]">
-              <p className="text-black dark:text-white">{el.name}</p>
-              {isClick ? (
-                <RemoveIcon color={theme == "light" ? "black" : "white"} />
-              ) : (
-                <RightIcon color={theme == "light" ? "black" : "white"} />
-              )}
-            </Button>
-          // </Link>
+          <Button
+            key={index}
+            onClick={() => onClick(el.id)}
+            className={`${chosenGenres.join(",").includes(el.id)?("bg-black dark:bg-white text-white dark:text-black"):("bg-white dark:bg-black text-black dark:text-white")} w-fit hover:opacity-80 border p-1 flex items-center justify-center h-[20px]`}
+          >
+            <p>{el.name}</p>
+            {chosenGenres.join(",").includes(el.id) ? (
+              <RemoveIcon color={chosenGenres.join(",").includes(el.id) ? "black" : "white"} />
+            ) : (
+              <RightIcon color={chosenGenres.join(",").includes(el.id)? "black" : "white"} />
+            )}
+          </Button>
         ))}
       </div>
     </div>

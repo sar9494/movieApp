@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 
 type props = {
   array: Array<Movie>;
+  searchValue:string
 };
 type Movie = {
   title: string;
@@ -13,15 +14,15 @@ type Movie = {
   id:number
 };
 export const SearchTab = (props: props) => {
-  const { array,  } = props;
+  const { array,searchValue  } = props;
   const {theme} =useTheme()
   
   return (
-    <div className="w-[600px] bg-white dark:bg-black absolute top-[80px]  rounded-xl flex flex-col gap-3 border">
+    <div className="w-[600px] bg-white dark:bg-black absolute top-[80px]  rounded-xl flex flex-col gap-3 border p-3">
       {array.slice(0, 5).map((el, index) => (
 
 <Link href={`/details/${el.id}`} key={index}>
-        <div  className=" rounded flex gap-3 p-3 justify-between items-center">
+        <div  className=" rounded flex gap-3 p-3 justify-between items-center border-b-2">
           <div className="flex gap-3  ">
             <img
               className="w-[80px] h-[100px] rounded-xl"
@@ -47,6 +48,9 @@ export const SearchTab = (props: props) => {
         </div>
         </Link>
       ))}
+      <Link href={"/search"}>
+      <p>See all results for <b>"{searchValue}"</b> </p>
+      </Link>
     </div>
   );
 };

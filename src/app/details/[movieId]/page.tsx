@@ -44,7 +44,6 @@ export default function Movie() {
   const getMovieInfo = async () => {
     const response = await getDetailInfo(movieId, "");
     setMovie(response.data);
-    // console.log(response.data);
 
     const response2 = await getMovieSimilarInfo(movieId, "/similar", 1);
     setSimilarMovie(response2.data.results);
@@ -124,7 +123,7 @@ export default function Movie() {
               </div>
             </div>
           </div>
-          <div className="flex gap-3 font-bold">
+          <div className="flex gap-3 font-bold w-[1200px] flex-wrap">
             {movie?.genres.map((el, index) => {
               return (
                 <div key={index} className="border w-fit p-1 rounded-2xl">

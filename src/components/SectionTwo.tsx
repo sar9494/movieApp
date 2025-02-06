@@ -1,7 +1,6 @@
 import { MovieBox } from "./index";
 import { SeeMoreIcon } from "@/icons/index";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 
@@ -22,7 +21,7 @@ export const SectionTwo = (props: props) => {
   const { name, title } = props;
   const [movie,setMovie]= useState<Array<movie>>([])
 
-  const router = useRouter();
+  
   const getMovieInfo = async () => {
     try {
       const response1 = await fetch(
