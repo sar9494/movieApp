@@ -40,6 +40,7 @@ export const Header = (props: Props) => {
   };
 
   useEffect(() => {
+    localStorage.setItem("searchValue", searchValue);
     getMovieInfo();
   }, [searchValue]);
 
