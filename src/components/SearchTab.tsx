@@ -48,7 +48,7 @@ export const SearchTab = (props: props) => {
         </div>
         </Link>
       ))}
-      <Link href={"/search"}>
+      <Link href={`/search?value=${searchValue}`}>
       <p>See all results for <b>"{searchValue}"</b> </p>
       </Link>
     </div>

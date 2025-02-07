@@ -4,7 +4,7 @@ import { RightIcon, RemoveIcon } from "@/icons/index";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { getMoviesInfo } from "@/utils/requests";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 type props = {
   className: string;
   pageName:string;
@@ -13,15 +13,9 @@ type genre = {
   name: string;
   id: string;
 };
-type IsClick = {
-  id: number;
-  clicked: boolean;
-};
 export const Genres = (props: props) => {
   const { className ,pageName} = props;
   const [genre, setGenre] = useState<Array<genre>>();
-  // const [chosenGenres, setChosenGenres] = useState<Array<number>>([]);
-  const [isClick, setIsClick] = useState<Array<IsClick>>([]);
   const { theme } = useTheme();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -50,13 +44,11 @@ export const Genres = (props: props) => {
     }
     params.set("genreslds", chosenGenres.join(","));
     router.push(`/${pageName}?${params.toString()}`);
-
   };
 
   useEffect(() => {
     getMovieInfo();
   }, []);
-
   return (
     <div
       className={` gap-3 flex-wrap top-[80px] bg-white dark:bg-black  rounded-xl border flex-col ${className}`}
@@ -77,9 +69,9 @@ export const Genres = (props: props) => {
           >
             <p>{el.name}</p>
             {chosenGenres.join(",").includes(el.id) ? (
-              <RemoveIcon color={chosenGenres.join(",").includes(el.id) ? "black" : "white"} />
+              <RemoveIcon color={theme=="light" ? "white" : "black"} />
             ) : (
-              <RightIcon color={chosenGenres.join(",").includes(el.id)? "black" : "white"} />
+              <RightIcon color={theme=="light"? "black" : "white"} />
             )}
           </Button>
         ))}

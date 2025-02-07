@@ -7,12 +7,16 @@ import {
     PaginationNext,
     PaginationPrevious,
   } from "@/components/ui/pagination";
+  import { useSearchParams } from "next/navigation";
+  import {useRouter} from "next/navigation";
   type props={
     step:number,
     setStep:Function
   }
 export const UsePagination = (props:props) => {
     const {setStep,step}=props
+
+  
     return(
         <Pagination>
         <PaginationContent>

@@ -1,14 +1,5 @@
 "use client";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { useTheme } from "next-themes";
+
 import { useState, useEffect } from "react";
 import {
   MovieBox,
@@ -16,7 +7,7 @@ import {
   Footer,
   UsePagination,
 } from "../../../components"
-import { useParams } from "next/navigation";
+import { useParams ,useRouter } from "next/navigation";
 type movie = {
   title: string;
   poster_path: string;
@@ -25,7 +16,7 @@ type movie = {
 };
 export default function Home() {
   const [step, setStep] = useState<number>(1);
-  const { setTheme, theme } = useTheme();
+  const router = useRouter()
     const { movieType } = useParams();
   const [movies, setMovies] = useState<Array<movie>>();
   const getMovies = async () => {
@@ -35,16 +26,20 @@ export default function Home() {
     const result = await response.json();
     setMovies(result.results);
   };
+  console.log(movieType);
+  
   useEffect(() => {
     getMovies();
+    router.refresh()
   }, [step]);
   return (
     <div className="flex flex-col gap-5 items-center">
       <Header/>
       <h1 className="text-4xl w-[1200px]">
-          <b>{movieType==="popular"&&("Popular")}</b>
+          
           <b>{movieType==="upcoming"&&("Upcoming")}</b>
           <b>{movieType==="top_rated"&&("Top Rated")}</b>
+          <b>{movieType==="popular"&&("Popular")}</b>
         </h1>
       <div className="flex flex-wrap w-[1200px] gap-3">
         {movies?.map((el: movie, index) => (

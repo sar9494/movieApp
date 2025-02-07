@@ -1,23 +1,25 @@
 "use client";
-import { useParams } from "next/navigation";
-import Link from "next/link";
+import { useParams,useRouter, useSearchParams } from "next/navigation";
 import { Header, Footer, MovieBox, UsePagination } from "@/components";
-import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { getDetailInfo, getMovieSimilarInfo } from "@/utils/requests";
+import {  getMovieSimilarInfo } from "@/utils/requests";
 import { MovieType } from "../page";
 
 export default function Movie() {
-  const { theme } = useTheme();
   const [similarMovie, setSimilarMovie] = useState<Array<MovieType>>();
   const { movieId } = useParams();
   const [step, setStep] = useState(1);
+    const router = useRouter();
+    const searchParams = useSearchParams();
   const getMovieInfo = async () => {
     const response2 = await getMovieSimilarInfo(movieId, "/similar", step);
     setSimilarMovie(response2.data.results);
   };
   useEffect(() => {
     getMovieInfo();
+    const params = new URLSearchParams(searchParams);
+  params.set("page", step?.toString()||"1");
+    router.push(`/details/${movieId}/similar?${params.toString()}`);
   }, [step]);
   return (
     <div className="flex flex-col items-center justify-center gap-5">
@@ -40,7 +42,7 @@ export default function Movie() {
           ))}
         </div>
       </div>
-      <UsePagination step={step} setStep={setStep} />
+      <UsePagination step={step} setStep={setStep} pageName="similar"/>
       <Footer />
     </div>
   );

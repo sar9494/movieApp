@@ -18,8 +18,6 @@ export default function Home() {
   const [step, setStep] = useState<number>(1);
   const [upcomingMovie, setUpcomingMovie] = useState<Array<movie>>([]);
   const searchParams = useSearchParams();
-  const [searchValue, setSearchValue] = useState("");
-
   console.log(searchParams.get("genreslds"));
 
   const filteredMovie = async () => {
@@ -36,7 +34,11 @@ export default function Home() {
   useEffect(() => {
     filteredMovie();
   }, [searchParams, step]);
-
+  // useEffect(()=>{
+  //   const params = new URLSearchParams(searchParams);
+  //   params.set("value", searchValue);
+  //   router.push(`/search?${params.toString()}`);
+  // })
   return (
     <div className="flex items-center flex-col w-screen gap-10">
       <Header  />
@@ -62,7 +64,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <UsePagination step={step} setStep={setStep} />
+      <UsePagination step={step} setStep={setStep}  />
       <Footer />
     </div>
   );

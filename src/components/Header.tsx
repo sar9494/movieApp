@@ -12,9 +12,10 @@ type Props = {
   // searchValue: string;
   // setSearchValue: Function;
   onChange?: (_value: string) => void;
+  place?:boolean
 };
 export const Header = (props: Props) => {
-  const { onChange: handleValueChange } = props;
+  const { onChange: handleValueChange ,place} = props;
   const { setTheme, theme } = useTheme();
   const [isClick, setIsClick] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -38,7 +39,9 @@ export const Header = (props: Props) => {
       setTheme("light");
     }
   };
-
+  useEffect(() => {
+    getMovieInfo();
+  }, []);
   useEffect(() => {
     localStorage.setItem("searchValue", searchValue);
     getMovieInfo();
@@ -71,7 +74,7 @@ export const Header = (props: Props) => {
           className={isClick ? "flex absolute p-5 w-[600px]" : "hidden"}
           pageName="genre"
         />
-        {searchValue.length != 0 && (
+        {searchValue.length != 0 &&!place&& (
           <SearchTab array={movies} searchValue={searchValue} />
         )}
       </div>
