@@ -24,11 +24,12 @@ export default function Home() {
   const [searchValue, setSearchValue] = useState(()=>{
     return  localStorage.getItem("searchValue")||''
   });
+  const chosenGenre =  searchParams.get("genreslds")?.split(',')
 
 
   const filteredMovie = async () => {
     const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${searchValue}&language=en-US&page=${step}&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
+      `https://api.themoviedb.org/3/search/movie?query=${searchValue}&language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
     );
     const result = await response.json();
     setUpcomingMovie(result.results);
@@ -65,7 +66,14 @@ export default function Home() {
             {upcomingMovie
             .map((el, index) => 
             {
-              if(el.genre_ids.join(",").includes(searchParams.get("genreslds")||"")){
+              let isInclude = false
+              chosenGenre?.map((num)=>{
+                if(el.genre_ids.join(",").includes(num)){
+                  isInclude=true
+                }
+              })
+              
+              if(chosenGenre?.join().length==0||isInclude){
                 return <MovieBox
                 key={index}
                 title={el.title}
