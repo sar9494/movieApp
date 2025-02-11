@@ -8,6 +8,7 @@ import { StarIcon, PlayIcon, SeeMoreIcon } from "@/icons";
 import { Button } from "@/components/ui";
 import { getDetailInfo, getMovieSimilarInfo } from "@/utils/requests";
 import ReactPlayer from 'react-player'
+import { X } from "lucide-react";
 
 export type MovieType = {
   title: string;
@@ -184,9 +185,9 @@ export default function Movie() {
       </div>
       {isClick && (
         <div
-          className="absolute w-screen h-screen bg-black bg-opacity-70 top-0 flex items-center justify-center"
-          onClick={exitTrailerHandler}
-        >
+          className="fixed w-screen h-screen bg-black bg-opacity-70 top-0 flex items-center justify-center"
+          onClick={exitTrailerHandler}>
+          
           <ReactPlayer   url={`https://www.youtube.com/watch?v=${team.videoUrl}`}/>
         </div>
       )}

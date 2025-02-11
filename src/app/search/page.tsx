@@ -73,7 +73,7 @@ export default function Home() {
                 }
               })
               
-              if(chosenGenre?.join().length==0||isInclude){
+              if(chosenGenre?.join().length==0||isInclude||chosenGenre==null){
                 return <MovieBox
                 key={index}
                 title={el.title}

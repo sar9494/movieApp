@@ -68,6 +68,7 @@ export const Header = (props: Props) => {
             className="w-[300px] border-none "
             placeholder="Search ..."
             onChange={onChange}
+            // value={searchValue}
           />
         </div>
         <Genres
