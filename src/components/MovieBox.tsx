@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { StarIcon } from "../icons/index";
+import { MovieType } from "@/app/details/[movieId]/page";
+
 type props= {
     url:string,
     rating:number,
@@ -10,6 +12,7 @@ type props= {
 }
 export const MovieBox = (props:props) => {
     const {url,rating,title,className ,imgHeigth,id} = props
+
   return (
     <Link href={`/details/${id}`}>
     <div className={`h-fit rounded-lg overflow-hidden ${className}`}>
@@ -23,7 +26,5 @@ export const MovieBox = (props:props) => {
       </div>
     </div>
     </Link>
-    
-    
   );
 };

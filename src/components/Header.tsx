@@ -1,16 +1,14 @@
 "use client";
 
-import { DownIcon, Logo, Sun, Moon, Search } from "../icons/index";
+import { DownIcon, Logo, Sun, Moon, Search } from "@/icons/index";
 import { Button, Input } from "./ui/index";
 import { Genres } from "./index";
 import { useEffect, useState } from "react";
-import { SearchTab } from "../components/index";
+import { SearchTab } from "@/components/index";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
 type Props = {
-  // searchValue: string;
-  // setSearchValue: Function;
   onChange?: (_value: string) => void;
   place?:boolean
 };
@@ -43,10 +41,8 @@ export const Header = (props: Props) => {
     getMovieInfo();
   }, []);
   useEffect(() => {
-    localStorage.setItem("searchValue", searchValue);
     getMovieInfo();
   }, [searchValue]);
-
   const genresClick = () => {
     isClick == false ? setIsClick(true) : setIsClick(false);
   };
@@ -68,7 +64,6 @@ export const Header = (props: Props) => {
             className="w-[300px] border-none "
             placeholder="Search ..."
             onChange={onChange}
-            // value={searchValue}
           />
         </div>
         <Genres
@@ -88,7 +83,6 @@ export const Header = (props: Props) => {
           className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"
           color="white"
         />
-        <span className="sr-only">Toggle theme</span>
       </Button>
     </div>
   );

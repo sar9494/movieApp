@@ -3,23 +3,18 @@ import { SeeMoreIcon } from "@/icons/index";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { MovieType } from "@/types";
+
 
 
 type props = {
   name: string;
   title: string;
 };
-type movie = {
-  title: string;
-  poster_path: string;
-  vote_average: number;
-  id:string | string[] | undefined;
-};
 export const SectionTwo = (props: props) => {
   const {theme} =useTheme()
-
   const { name, title } = props;
-  const [movie,setMovie]= useState<Array<movie>>([])
+  const [movie,setMovie]= useState<Array<MovieType>>([])
 
   
   const getMovieInfo = async () => {
@@ -28,9 +23,7 @@ export const SectionTwo = (props: props) => {
        ` https://api.themoviedb.org/3/movie/${title}?language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
       );
       const result1 = await response1.json();
-      
       setMovie(result1.results)
-
     } catch (e) {
       console.log(e);
     }

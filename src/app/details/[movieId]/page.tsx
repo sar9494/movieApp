@@ -1,27 +1,13 @@
 "use client";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Header, Footer, MovieBox } from "@/components";
+import { Header, Footer, MovieBox, PlayButton } from "@/components";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { StarIcon, PlayIcon, SeeMoreIcon } from "@/icons";
-import { Button } from "@/components/ui";
+import { StarIcon, SeeMoreIcon } from "@/icons";
 import { getDetailInfo, getMovieSimilarInfo } from "@/utils/requests";
-import ReactPlayer from 'react-player'
-import { X } from "lucide-react";
+import { MovieType } from "@/types";
 
-export type MovieType = {
-  title: string;
-  vote_average: number;
-  poster_path: string;
-  backdrop_path: string;
-  release_date: string;
-  runtime: number;
-  overview: string;
-  genres: Array<Genre>;
-  vote_count: number;
-  id: string | string[] | undefined;
-};
 type Genre = {
   id: number;
   name: string;
@@ -51,19 +37,17 @@ export default function Movie() {
 
     const response3 = await getDetailInfo(movieId, "/videos");
     const response4 = await getDetailInfo(movieId, "/credits");
-    response3.data.results.map((el:{name:string,key:string})=>{
-      if(el.name.includes("railer")){
-        setTeam({crew:response4.data.crew[2].name,cast:response4.data.cast,videoUrl: el.key });
+    response3.data.results.map((el: { name: string; key: string }) => {
+      if (el.name.includes("railer")) {
+        setTeam({
+          crew: response4.data.crew[2].name,
+          cast: response4.data.cast,
+          videoUrl: el.key,
+        });
       }
-    })
+    });
   };
-  const watchTrailerHandler = () => {
-    !isClick && setIsClick(true);
-  };
-  const exitTrailerHandler = () => {
-    isClick && setIsClick(false);
-  };
-  
+
   useEffect(() => {
     getMovieInfo();
   }, []);
@@ -111,16 +95,7 @@ export default function Movie() {
                 className="rounded-lg"
               />
               <div className="w-full bg-black bg-opacity-50 h-full absolute top-0 p-10 flex items-end">
-                <div
-                  className="flex items-center gap-2"
-                  onClick={watchTrailerHandler}
-                >
-                  <Button className="rounded-full w-fit h-fit p-3 flex items-center justify-center ">
-                    <PlayIcon color="black" />
-                  </Button>
-                  <p>Play trailer</p>
-                  <p>time</p>
-                </div>
+                <PlayButton id={movie?.id} />
               </div>
             </div>
           </div>
@@ -183,14 +158,6 @@ export default function Movie() {
         </div>
         <Footer />
       </div>
-      {isClick && (
-        <div
-          className="fixed w-screen h-screen bg-black bg-opacity-70 top-0 flex items-center justify-center"
-          onClick={exitTrailerHandler}>
-          
-          <ReactPlayer   url={`https://www.youtube.com/watch?v=${team.videoUrl}`}/>
-        </div>
-      )}
     </div>
   );
 }

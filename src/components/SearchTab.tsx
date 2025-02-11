@@ -1,17 +1,12 @@
 import { StarIcon,SeeMoreIcon} from "../icons/index";
 import Link from "next/link";
 import { useTheme } from "next-themes";
+import { MovieType } from "@/types";
+
 
 type props = {
-  array: Array<Movie>;
+  array: Array<MovieType>;
   searchValue:string
-};
-type Movie = {
-  title: string;
-  poster_path: string;
-  vote_average: number;
-  release_date: string;
-  id:number
 };
 export const SearchTab = (props: props) => {
   const { array,searchValue  } = props;

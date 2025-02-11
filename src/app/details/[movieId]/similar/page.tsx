@@ -3,7 +3,7 @@ import { useParams,useRouter, useSearchParams } from "next/navigation";
 import { Header, Footer, MovieBox, UsePagination } from "@/components";
 import { useEffect, useState } from "react";
 import {  getMovieSimilarInfo } from "@/utils/requests";
-import { MovieType } from "../page";
+import { MovieType } from "@/types";
 
 export default function Movie() {
   const [similarMovie, setSimilarMovie] = useState<Array<MovieType>>();
@@ -42,7 +42,7 @@ export default function Movie() {
           ))}
         </div>
       </div>
-      <UsePagination step={step} setStep={setStep} pageName="similar"/>
+      <UsePagination step={step} setStep={setStep} />
       <Footer />
     </div>
   );
