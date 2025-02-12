@@ -1,10 +1,10 @@
 "use client";
 import {
   Footer,
-  Genres,
   MovieBox,
   Header,
   UsePagination,
+  GenreList,
 } from "@/components/index";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -48,7 +48,7 @@ export default function Home() {
           <p className="text-3xl">
             <b>Search Filter</b>
           </p>
-          <Genres className="border-none flex w-[480px]" pageName="search" />
+          <GenreList pageName="search" />
         </div>
         {searchValue.length == 0 ? (
           <div className="w-[1200px] flex items-center justify-center border m-3 rounded-xl py-10 h-fit">

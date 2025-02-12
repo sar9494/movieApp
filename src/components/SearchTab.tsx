@@ -1,7 +1,8 @@
-import { StarIcon,SeeMoreIcon} from "../icons/index";
+import { StarIcon,} from "lucide-react"
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { MovieType } from "@/types";
+import { MoveRight } from "lucide-react";
 
 
 type props = {
@@ -29,7 +30,7 @@ export const SearchTab = (props: props) => {
                 <b>{el.title}</b>
               </p>
               <div className="flex">
-                <StarIcon />
+                <StarIcon color="yellow" fill="yellow" size={20} />
                 <p>{el.vote_average}/10</p>
               </div>
             </div>
@@ -38,7 +39,7 @@ export const SearchTab = (props: props) => {
             className="flex items-center gap-2"
           >
             <p>See more</p>
-            <SeeMoreIcon color={theme == "light" ? "black" : "white"} />
+            <MoveRight />
           </div>
         </div>
         </Link>

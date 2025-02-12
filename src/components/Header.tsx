@@ -1,12 +1,12 @@
 "use client";
 
-import { DownIcon, Logo, Sun, Moon, Search } from "@/icons/index";
+import {  Logo } from "@/icons/Logo";
 import { Button, Input } from "./ui/index";
+import { Sun ,Moon,Search,X} from "lucide-react";
 import { Genres } from "./index";
 import { useEffect, useState } from "react";
 import { SearchTab } from "@/components/index";
 import { useTheme } from "next-themes";
-import Link from "next/link";
 
 type Props = {
   onChange?: (_value: string) => void;
@@ -15,9 +15,9 @@ type Props = {
 export const Header = (props: Props) => {
   const { onChange: handleValueChange ,place} = props;
   const { setTheme, theme } = useTheme();
-  const [isClick, setIsClick] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState([]);
+  const [isActive ,setIsActive] = useState(false)
 
   const getMovieInfo = async () => {
     const response = await fetch(
@@ -37,44 +37,34 @@ export const Header = (props: Props) => {
       setTheme("light");
     }
   };
+  const searchOnClick = (value:boolean) =>{
+setIsActive(value)
+  }
   useEffect(() => {
     getMovieInfo();
   }, []);
   useEffect(() => {
     getMovieInfo();
   }, [searchValue]);
-  const genresClick = () => {
-    isClick == false ? setIsClick(true) : setIsClick(false);
-  };
   return (
-    <div className="dark:bg-black bg-white w-screen flex items-center justify-around gap-10 p-5 sticky top-0 z-10">
-      <Link href={"/"}>
-        <Logo color="#4338CA" />
-      </Link>
+    <div className="dark:bg-black bg-white w-screen flex items-center justify-between gap-10 p-5 sticky top-0 z-10">
+      
+      {!isActive&&<Logo color="#4338CA" />}
       <div className="flex gap-5 relative">
-        <Button
-          className="dark:text-white text-black border hover:bg-gray-100 bg-white dark:bg-black"
-          onClick={genresClick}
-        >
-          <DownIcon color={theme == "light" ? "black" : "white"} /> Genre
-        </Button>
+      <Genres isActive={isActive}/>
         <div className="flex items-center justify-around border px-2 rounded-lg ">
-          <Search />
+          <Search size={20} onClick={()=>searchOnClick(true)}/>
           <Input
-            className="w-[300px] border-none "
+            className={`w-[300px] border-none hidden sm:block ${isActive?"block ":"hidden"}`}
             placeholder="Search ..."
             onChange={onChange}
           />
         </div>
-        <Genres
-          className={isClick ? "flex absolute p-5 w-[600px]" : "hidden"}
-          pageName="genre"
-        />
         {searchValue.length != 0 &&!place&& (
           <SearchTab array={movies} searchValue={searchValue} />
         )}
       </div>
-      <Button variant="outline" size="icon" onClick={onClick}>
+      <Button variant="outline" size="icon" onClick={onClick} className={`${!isActive?"flex":"hidden"}`}>
         <Moon
           className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
           color="black"
@@ -84,6 +74,7 @@ export const Header = (props: Props) => {
           color="white"
         />
       </Button>
+      <X className={`${isActive?"flex":"hidden"}`} onClick={()=>searchOnClick(false)}/>
     </div>
   );
 };

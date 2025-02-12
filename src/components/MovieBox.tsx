@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { StarIcon } from "../icons/index";
-import { MovieType } from "@/app/details/[movieId]/page";
+import { StarIcon } from "lucide-react";
 
 type props= {
     url:string,
@@ -19,7 +18,7 @@ export const MovieBox = (props:props) => {
       <img className={`w-full ${imgHeigth}`} src={`https://image.tmdb.org/t/p/original${url}`} alt="" />
       <div className="w-full h-[95px] bg-gray-200 p-2 dark:bg-gray-600">
         <div className="flex gap-2 items-center">
-          <StarIcon />
+          <StarIcon color="yellow" fill="yellow" size={18}/>
           <p>{rating}</p>
         </div>
         <h1 className="text-xl">{title}</h1>

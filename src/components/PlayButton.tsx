@@ -13,7 +13,6 @@ import ReactPlayer from "react-player";
 
 export const PlayButton = ({ id }: { id: string | string[] | undefined }) => {
   const [trailer, setTrailer] = useState<string>();
-
   const getTrailer = async (movieId: string | string[] | undefined) => {
     const response3 = await getDetailInfo(movieId, "/videos");
     response3.data.results.map((el: { name: string; key: string }) => {

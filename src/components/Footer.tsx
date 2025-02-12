@@ -1,4 +1,5 @@
-import { Logo, Message, PhoneIcon } from "@/icons/index";
+import { Logo,} from "@/icons/Logo";
+import { Phone ,Mail} from "lucide-react";
 export const Footer = () => {
   return (
     <div className="w-screen h-[280px] bg-[#4338CA] flex justify-center text-white">
@@ -11,14 +12,14 @@ export const Footer = () => {
           <div className="flex flex-col gap-2">
             <p>Contact Information</p>
             <div className="flex items-center gap-2">
-              <Message />
+              <Mail size={20} />
               <div>
                 <p>Email</p>
                 <p>support@movieZ.com</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <PhoneIcon />
+              <Phone size={20} />
               <div>
                 <p>Phone</p>
                 <p>+976 (11) 123-4567</p>

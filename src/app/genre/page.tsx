@@ -1,7 +1,7 @@
 "use client";
 import {
   Footer,
-  Genres,
+  GenreList,
   MovieBox,
   Header,
   UsePagination,
@@ -36,7 +36,7 @@ export default function Home() {
           <p className="text-3xl">
             <b>Search Filter</b>
           </p>
-          <Genres className="border-none flex w-[480px]" pageName="genre" />
+          <GenreList pageName="genre" />
         </div>
         {upcomingMovie.length != 0 ? (
           <div className="flex shrink-0 flex-wrap w-[800px] gap-6 overflow-y-auto">

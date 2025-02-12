@@ -9,7 +9,6 @@ export default function Home() {
   const [step, setStep] = useState<number>(1);
   const router = useRouter();
   const { movieType } = useParams();
-
   const [movies, setMovies] = useState<Array<GeneralMovieType>>();
   const getMovies = async () => {
     const response = await fetch(
@@ -18,7 +17,6 @@ export default function Home() {
     const result = await response.json();
     setMovies(result.results);
   };
-  console.log(movieType);
 
   useEffect(() => {
     getMovies();

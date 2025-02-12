@@ -1,16 +1,16 @@
 "use client";
-import { useParams,useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { Header, Footer, MovieBox, UsePagination } from "@/components";
 import { useEffect, useState } from "react";
-import {  getMovieSimilarInfo } from "@/utils/requests";
+import { getMovieSimilarInfo } from "@/utils/requests";
 import { MovieType } from "@/types";
 
 export default function Movie() {
   const [similarMovie, setSimilarMovie] = useState<Array<MovieType>>();
   const { movieId } = useParams();
   const [step, setStep] = useState(1);
-    const router = useRouter();
-    const searchParams = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const getMovieInfo = async () => {
     const response2 = await getMovieSimilarInfo(movieId, "/similar", step);
     setSimilarMovie(response2.data.results);
@@ -18,7 +18,7 @@ export default function Movie() {
   useEffect(() => {
     getMovieInfo();
     const params = new URLSearchParams(searchParams);
-  params.set("page", step?.toString()||"1");
+    params.set("page", step?.toString() || "1");
     router.push(`/details/${movieId}/similar?${params.toString()}`);
   }, [step]);
   return (

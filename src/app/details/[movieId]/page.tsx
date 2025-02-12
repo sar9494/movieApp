@@ -1,56 +1,36 @@
 "use client";
 import { useParams } from "next/navigation";
-import Link from "next/link";
-import { Header, Footer, MovieBox, PlayButton } from "@/components";
-import { useTheme } from "next-themes";
+import { Header, Footer, MovieBox, PlayButton ,SeeMore} from "@/components";
 import { useEffect, useState } from "react";
-import { StarIcon, SeeMoreIcon } from "@/icons";
+import { StarIcon } from "lucide-react";
 import { getDetailInfo, getMovieSimilarInfo } from "@/utils/requests";
 import { MovieType } from "@/types";
 
-type Genre = {
-  id: number;
-  name: string;
-};
-type Cast = {
-  name: string;
-};
 type Team = {
-  cast: Array<Cast>;
+  cast: Array<{name: string}>;
   crew: string;
-  videoUrl: string;
 };
 export default function Movie() {
-  const { theme } = useTheme();
   const [movie, setMovie] = useState<MovieType>();
   const [similarMovie, setSimilarMovie] = useState<Array<MovieType>>();
   const [team, setTeam] = useState<Team>({} as Team);
-  const [isClick, setIsClick] = useState(false);
   const { movieId } = useParams();
 
   const getMovieInfo = async () => {
     const response = await getDetailInfo(movieId, "");
     setMovie(response.data);
-
     const response2 = await getMovieSimilarInfo(movieId, "/similar", 1);
     setSimilarMovie(response2.data.results);
-
-    const response3 = await getDetailInfo(movieId, "/videos");
     const response4 = await getDetailInfo(movieId, "/credits");
-    response3.data.results.map((el: { name: string; key: string }) => {
-      if (el.name.includes("railer")) {
         setTeam({
           crew: response4.data.crew[2].name,
           cast: response4.data.cast,
-          videoUrl: el.key,
         });
-      }
-    });
   };
-
   useEffect(() => {
     getMovieInfo();
   }, []);
+
   return (
     <div className="flex flex-col items-center justify-center relative">
       <div className="flex flex-col items-center justify-center gap-5">
@@ -69,7 +49,7 @@ export default function Movie() {
             <div>
               <p>Rating</p>
               <div className="flex items-center justify-center gap-2">
-                <StarIcon />
+              <StarIcon color="yellow" fill="yellow" size={24} />
                 <div className="text-sm">
                   <div className="flex">
                     <p>
@@ -125,7 +105,7 @@ export default function Movie() {
               <b>Stars</b>
             </p>
             <div className="flex gap-3">
-              {team.cast?.slice(0, 5).map((el: Cast, index: number) => (
+              {team.cast?.slice(0, 5).map((el: {name:string}, index: number) => (
                 <div className="flex gap-3" key={index}>
                   <p key={index}> {el.name}</p>
                   <p>{index !== 4 && "·"}</p>
@@ -135,12 +115,7 @@ export default function Movie() {
           </div>
           <div className="flex justify-between items-center">
             <p className="text-[26px] font-semibold">More like this</p>
-            <Link href={`/details/${movieId}/similar`}>
-              <div className="flex items-center gap-2">
-                <p>See more</p>
-                <SeeMoreIcon color={theme == "light" ? "black" : "white"} />
-              </div>
-            </Link>
+            <SeeMore url={`/details/${movieId}/similar`}/>
           </div>
           <div className="flex gap-7">
             {similarMovie?.slice(0, 5).map((movie, index) => (

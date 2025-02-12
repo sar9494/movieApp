@@ -7,7 +7,8 @@ export * from "./Genres"
 export * from "./UsePagination"
 export * from "./SearchTab"
 export * from "./PlayButton"
-
+export * from "./SeeMore"
+export * from "./GenreList"
 
 
 

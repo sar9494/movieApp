@@ -1,22 +1,15 @@
-import { MovieBox } from "./index";
-import { SeeMoreIcon } from "@/icons/index";
-import Link from "next/link";
+import { MovieBox,SeeMore } from "./index";
 import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
 import { MovieType } from "@/types";
-
-
 
 type props = {
   name: string;
   title: string;
 };
 export const SectionTwo = (props: props) => {
-  const {theme} =useTheme()
   const { name, title } = props;
   const [movie,setMovie]= useState<Array<MovieType>>([])
 
-  
   const getMovieInfo = async () => {
     try {
       const response1 = await fetch(
@@ -38,14 +31,7 @@ export const SectionTwo = (props: props) => {
         <h1 className="text-4xl">
           <b>{name}</b>
         </h1>
-        <Link href={`/type/${title}`}>
-          <div
-            className="flex items-center gap-2"
-          >
-            <p>See more</p>
-            <SeeMoreIcon color={theme == "light" ? "black" : "white"} />
-          </div>
-        </Link>
+        <SeeMore url={`/type/${title}`}/>
       </div>
       <div className="flex shrink-0 flex-wrap w-full gap-6 overflow-y-auto">
         {movie.slice(0, 10).map((movie, index) => (
