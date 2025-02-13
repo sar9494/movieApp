@@ -12,7 +12,7 @@ export const Genres = ({ isActive }: { isActive: boolean }) => {
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger className=" border items-center justify-center px-2 rounded hidden sm:flex">
+        <DropdownMenuTrigger className= {`border items-center justify-center px-2 rounded  xl:flex ${isActive?"block":"hidden"}`} >
           <ChevronDown />
           <p className={`${isActive && "hidden"}`}>Genres</p>
         </DropdownMenuTrigger>

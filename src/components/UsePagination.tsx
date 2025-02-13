@@ -15,6 +15,7 @@ export const UsePagination = ({
   step: number;
   setStep: Function;
 }) => {
+  
   const onClick = (direction: number) => {
     setStep(step + direction);
   };

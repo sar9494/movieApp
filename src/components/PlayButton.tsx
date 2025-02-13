@@ -26,10 +26,10 @@ export const PlayButton = ({ id }: { id: string | string[] | undefined }) => {
     <Dialog>
       <DialogTrigger>
         <div
-          className="flex bg-black w-fit text-white items-center gap-[8px] px-[16px] py-[8px] rounded"
+          className="flex xl:bg-black xl:dark:bg-black w-fit xl:text-white bg-gray-200 dark:bg-gray-700 items-center gap-[8px] px-[16px] py-[8px] rounded"
           onClick={() => getTrailer(id)}
         >
-          <PlayIcon color="white" size={12}/>
+          <PlayIcon  size={12}/>
           <p>Watch trailer</p>
         </div>
       </DialogTrigger>
