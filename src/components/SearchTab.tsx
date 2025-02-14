@@ -14,7 +14,7 @@ export const SearchTab = (props: props) => {
   const {theme} =useTheme()
   
   return (
-    <div className="w-[600px] bg-white dark:bg-black absolute top-[80px]  rounded-xl flex flex-col gap-3 border p-3">
+    <div className="lg:w-[600px] bg-white dark:bg-black absolute top-[80px] w-[335px] h-[500px] right-0 lg:left-0 overflow-scroll rounded-xl flex flex-col gap-3 border p-3">
       {array.slice(0, 5).map((el, index) => (
 
 <Link href={`/details/${el.id}`} key={index}>

@@ -41,48 +41,55 @@ export default function Home() {
   }, [searchValue, step]);
 
   return (
-    <div className="flex items-center flex-col w-screen gap-10  ">
+    <div className="flex items-center flex-col w-screen   ">
       <Header onChange={handleChange} place={true} />
-      <div className="w-[1200px] flex flex-row-reverse min-h-[calc(100vh-420px)] ">
+      <div className="max-w-[1200px] flex flex-col-reverse lg:flex-row-reverse min-h-[calc(100vh-420px)] p-5">
         <div>
           <p className="text-3xl">
-            <b>Search Filter</b>
+            <b>Search by genre</b>
           </p>
+          <p><b>See lists of movies by genre</b></p>
           <GenreList pageName="search" />
         </div>
         {searchValue.length == 0 ? (
-          <div className="w-[1200px] flex items-center justify-center border m-3 rounded-xl py-10 h-fit">
+          <div className="max-w-[1200px] flex items-center justify-center border m-3 rounded-xl py-10 h-fit">
             <b>No results found.</b>{" "}
           </div>
-        ) : (
-          <div className="flex shrink-0 flex-wrap w-[800px] gap-6 overflow-y-auto">
-            {upcomingMovie.map((el, index) => {
-              let isInclude = false;
-              chosenGenre?.map((num) => {
-                if (el.genre_ids.join(",").includes(num)) {
-                  isInclude = true;
-                }
-              });
-              if (
-                chosenGenre?.join().length == 0 ||
-                isInclude ||
-                chosenGenre == null
-              ) {
-                return (
-                  <MovieBox
-                    key={index}
-                    title={el.title}
-                    url={el.poster_path}
-                    rating={el.vote_average}
-                    id={el.id}
-                    className="w-[165px]"
-                    imgHeigth="h-[205px]"
-                  />
-                );
-              }
-            })}
-            <UsePagination step={step} setStep={setStep} />
-          </div>
+        ) : (<>
+        <div className="flex flex-col gap-3 pb-10">
+        <p className="text-2xl"><b>Search results</b></p>
+
+<div className="flex shrink-0 flex-wrap lg:w-[800px] gap-6 overflow-y-auto">
+  {upcomingMovie.map((el, index) => {
+    let isInclude = false;
+    chosenGenre?.map((num) => {
+      if (el.genre_ids.join(",").includes(num)) {
+        isInclude = true;
+      }
+    });
+    if (
+      chosenGenre?.join().length == 0 ||
+      isInclude ||
+      chosenGenre == null
+    ) {
+      return (
+        <MovieBox
+          key={index}
+          title={el.title}
+          url={el.poster_path}
+          rating={el.vote_average}
+          id={el.id}
+          className="w-[157px] lg:w-[165px]"
+          imgHeigth="h-[234px] lg:h-[244px]"
+        />
+      );
+    }
+  })}
+  <UsePagination step={step} setStep={setStep} />
+</div>
+        </div>
+        </>
+          
         )}
       </div>
       <Footer />

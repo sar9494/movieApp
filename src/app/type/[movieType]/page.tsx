@@ -25,8 +25,8 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-5 items-center">
       <Header />
-      <div className="w-[1200px] gap-3 flex flex-col">
-        <h1 className="text-4xl w-[1200px]">
+      <div className="w-full max-w-[1200px] flex flex-col gap-10 p-5 ">
+        <h1 className="text-3xl lg:text-4xl w-full">
           <b>{movieType === "upcoming" && "Upcoming"}</b>
           <b>{movieType === "top_rated" && "Top Rated"}</b>
           <b>{movieType === "popular" && "Popular"}</b>
@@ -38,8 +38,8 @@ export default function Home() {
               title={el.title}
               url={el.poster_path}
               rating={el.vote_average}
-              className="w-[230px]"
-              imgHeigth="h-[345px]"
+              className="w-[157px] lg:w-[230px]"
+            imgHeigth="h-[234px] lg:h-[335px]"
               id={el.id}
             />
           ))}

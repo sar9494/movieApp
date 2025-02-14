@@ -51,23 +51,26 @@ export const Header = (props: Props) => {
     <div className="flex flex-col relative">
       <div className="dark:bg-black bg-white w-screen flex items-center justify-between  p-5 sticky top-0 z-10">
      <Logo color="#4338CA" />
-      <div className="flex gap-1 relative xl:justify-between xl:w-2/3">
+      <div className="flex gap-1 relative lg:justify-between lg:w-2/3">
         <div className="flex gap-3">
           <Genres isActive={false} />
-          <div className="flex items-center justify-around border px-2 rounded-md sm:hidden xl:flex ">
-            <button className=" hidden xl:block" disabled >
+          <div className="flex items-center justify-around border px-2 rounded-md sm:hidden lg:flex ">
+            <button className=" hidden lg:block" disabled >
             <Search size={20} onClick={() => searchOnClick(true)} />
             </button>
-            <Search size={20} onClick={() => searchOnClick(true)} className="xl:hidden"/>
+            <Search size={20} onClick={() => searchOnClick(true)} className="lg:hidden"/>
             <Input
               className={`border-none hidden sm:block`}
               placeholder="Search ..."
               onChange={onChange}
             />
           </div>
+          <div className="flex flex-col relative lg:w-fit w-full lg:static">
           {searchValue.length != 0 && !place && (
             <SearchTab array={movies} searchValue={searchValue} />
           )}
+          </div>
+          
         </div>
         <Button
           variant="outline"

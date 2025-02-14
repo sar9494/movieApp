@@ -46,7 +46,7 @@ export const GenreList = (props: props) => {
   }, []);
   return (
     <>
-          <div className="w-full flex flex-wrap gap-3 p-2">
+          <div className="w-full flex flex-wrap gap-5 py-3 ">
           {genre?.map((el: genre, index) => (
             <div key={index}>
               <Badge variant={"outline"}

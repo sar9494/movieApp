@@ -42,7 +42,7 @@ export const SectionTwo = (props: props) => {
             rating={movie.vote_average}
             id={movie.id}
             className="w-[157px] lg:w-[230px]"
-            imgHeigth="h-[280px] lg:h-[345px]"
+            imgHeigth="h-[234px] lg:h-[335px]"
           />
         ))}
       </div>

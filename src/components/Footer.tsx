@@ -3,7 +3,7 @@ import { Phone ,Mail} from "lucide-react";
 export const Footer = () => {
   return (
     <div className="w-screen h-[280px] bg-[#4338CA] flex justify-start text-white">
-      <div className="xl:max-w-[1250px] h-full p-5 xl:p-10 flex flex-col xl:flex-row sm:gap-3 xl:justify-between w-full">
+      <div className="xl:max-w-[1250px] h-full p-5 lg:p-10 flex flex-col lg:flex-row sm:gap-3 lg:justify-between w-full">
         <div>
           <Logo color="white" />
           <p>© 2024 Movie Z. All Rights Reserved.</p>
@@ -28,7 +28,7 @@ export const Footer = () => {
           </div>
           <div className="flex flex-col gap-2">
             <p>Follow us</p>
-            <div className="flex flex-col gap-2 xl:flex-row">
+            <div className="flex flex-col gap-2 lg:flex-row">
               <p>Facebook</p>
               <p>Instagram</p>
               <p>Twitter</p>

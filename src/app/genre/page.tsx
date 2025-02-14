@@ -28,18 +28,25 @@ export default function Home() {
     filteredMovie();
   }, [searchParams, step]);
   return (
-    <div className="flex items-center flex-col w-screen gap-10">
+    <div className="flex items-center flex-col w-screen ">
       <Header />
-
-      <div className="w-[1200px] flex min-h-[calc(100vh-420px)]">
-        <div>
+      <div className="w-full max-w-[1200px] flex flex-col lg:flex-row min-h-[calc(100vh-420px)] p-5">
+        <div className="flex flex-col  gap-3">
           <p className="text-3xl">
             <b>Search Filter</b>
           </p>
-          <GenreList pageName="genre" />
+          <div>
+            <div className="py-3">
+              <p className={`text-3xl`}>
+                <b>Genres</b>
+              </p>
+              <p>See lists of movies by genre</p>
+            </div>
+            <GenreList pageName="genre" />
+          </div>
         </div>
         {upcomingMovie.length != 0 ? (
-          <div className="flex shrink-0 flex-wrap w-[800px] gap-6 overflow-y-auto">
+          <div className="flex shrink-0 flex-wrap w-full lg:w-[800px]  gap-6 overflow-y-auto">
             {upcomingMovie.map((el, index) => (
               <MovieBox
                 key={index}
@@ -47,8 +54,8 @@ export default function Home() {
                 url={el.poster_path}
                 rating={el.vote_average}
                 id={el.id}
-                className="w-[165px]"
-                imgHeigth="h-[205px]"
+                className="w-[157px] lg:w-[165px]"
+                imgHeigth="h-[234px] lg:h-[244px]"
               />
             ))}
             <UsePagination step={step} setStep={setStep} />

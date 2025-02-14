@@ -24,7 +24,7 @@ export default function Movie() {
   return (
     <div className="flex flex-col items-center justify-center gap-5">
       <Header />
-      <div className="w-[1200px] flex flex-col gap-5">
+      <div className="max-w-[1200px] flex flex-col gap-5 p-5">
         <div className="flex justify-between items-center">
           <p className="text-[26px] font-semibold">More like this</p>
         </div>
@@ -35,8 +35,8 @@ export default function Movie() {
               url={movie.poster_path}
               rating={movie.vote_average}
               title={movie.title}
-              className="w-[200px]"
-              imgHeigth="h-[300px]"
+              className="w-[157px] lg:w-[230px]"
+            imgHeigth="h-[234px] lg:h-[335px]"
               id={movie.id}
             />
           ))}
