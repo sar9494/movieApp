@@ -24,21 +24,24 @@ export const PlayButton = ({ id }: { id: string | string[] | undefined }) => {
 
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger className="w-fit">
         <div
           className="flex xl:bg-black xl:dark:bg-black w-fit xl:text-white bg-gray-200 dark:bg-gray-700 items-center gap-[8px] px-[16px] py-[8px] rounded"
           onClick={() => getTrailer(id)}
         >
-          <PlayIcon  size={12}/>
+          <PlayIcon size={12} />
           <p>Watch trailer</p>
         </div>
       </DialogTrigger>
-      <DialogContent className="max-w-fit">
+      <DialogContent className="lg:w-[700px] w-[430px]">
         <DialogHeader>
           <DialogTitle></DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
-        <ReactPlayer url={`https://www.youtube.com/watch?v=${trailer}`} />
+        <ReactPlayer
+          url={`https://www.youtube.com/watch?v=${trailer}`}
+          width={"w-full "}
+        />
       </DialogContent>
     </Dialog>
   );
