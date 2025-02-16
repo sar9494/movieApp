@@ -1,11 +1,5 @@
 "use client";
-import {
-  Footer,
-  GenreList,
-  MovieBox,
-  Header,
-  UsePagination,
-} from "@/components/index";
+import { GenreList, MovieBox, UsePagination } from "@/components/index";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { MovieType } from "@/types";
@@ -29,8 +23,7 @@ export default function Home() {
   }, [searchParams, step]);
   return (
     <div className="flex items-center flex-col w-screen ">
-      <Header />
-      <div className="w-full max-w-[1200px] flex flex-col lg:flex-row min-h-[calc(100vh-420px)] p-5">
+      <div className="w-full max-w-[1200px] flex flex-col lg:flex-row p-5">
         <div className="flex flex-col  gap-3">
           <p className="text-3xl">
             <b>Search Filter</b>
@@ -66,7 +59,6 @@ export default function Home() {
           </div>
         )}
       </div>
-      <Footer />
     </div>
   );
 }

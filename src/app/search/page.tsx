@@ -1,11 +1,5 @@
 "use client";
-import {
-  Footer,
-  MovieBox,
-  Header,
-  UsePagination,
-  GenreList,
-} from "@/components/index";
+import { MovieBox, UsePagination, GenreList } from "@/components/index";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { MovieType } from "@/types";
@@ -29,9 +23,6 @@ export default function Home() {
     setUpcomingMovie(result.results);
     console.log(result);
   };
-  const handleChange = (value: string) => {
-    setSearchValue(value);
-  };
   useEffect(() => {
     filteredMovie();
     const params = new URLSearchParams(searchParams);
@@ -41,10 +32,11 @@ export default function Home() {
     router.push(`/search?${params.toString()}`);
     router.refresh;
   }, [searchValue, step]);
-
+  useEffect(() => {
+    setSearchValue(searchParams.get("value") || "");
+  }, [searchParams]);
   return (
     <div className="flex items-center flex-col w-screen   ">
-      <Header onChange={handleChange} place={true} />
       <div className="max-w-[1200px] flex flex-col-reverse lg:flex-row-reverse min-h-[calc(100vh-420px)] p-5">
         <div>
           <p className="text-3xl">
@@ -56,7 +48,7 @@ export default function Home() {
           <GenreList pageName="search" />
         </div>
         {searchValue.length == 0 ? (
-          <div className="max-w-[1200px] flex items-center justify-center border m-3 rounded-xl py-10 h-fit">
+          <div className="xl:w-[1200px] lg:w-[800px] flex items-center justify-center border m-3 rounded-xl py-10 h-fit">
             <b>No results found.</b>{" "}
           </div>
         ) : (
@@ -98,7 +90,6 @@ export default function Home() {
           </>
         )}
       </div>
-      <Footer />
     </div>
   );
 }

@@ -1,22 +1,21 @@
 "use client";
 
 import { Logo } from "@/icons/Logo";
-import { Button, Input } from "./ui/index";
+import { Button, Input } from "@/components/ui/index";
 import { Sun, Moon, Search, X } from "lucide-react";
-import { Genres } from "./index";
+import { Genres } from "@/components";
 import { useEffect, useState } from "react";
-import { SearchTab } from "@/components/index";
+import { SearchTab, HiddenSearch } from "@/components/index";
 import { useTheme } from "next-themes";
-type Props = {
-  onChange?: (_value: string) => void;
-  place?: boolean;
-};
-export const Header = (props: Props) => {
-  const { onChange: handleValueChange, place } = props;
+import { useRouter, useSearchParams } from "next/navigation";
+
+export const Header = () => {
+  const router = useRouter();
   const { setTheme, theme } = useTheme();
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState([]);
   const [isActive, setIsActive] = useState(false);
+  const searchParams = useSearchParams();
 
   const getMovieInfo = async () => {
     const response = await fetch(
@@ -27,7 +26,11 @@ export const Header = (props: Props) => {
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    handleValueChange && handleValueChange(e.target.value);
+    const params = new URLSearchParams(searchParams);
+    if (searchParams.get("value") != null) {
+      params.set("value", e.target.value);
+      router.push(`/search?${params.toString()}`);
+    }
   };
   const onClick = () => {
     if (theme == "light") {
@@ -47,8 +50,8 @@ export const Header = (props: Props) => {
     getMovieInfo();
   }, [searchValue]);
   return (
-    <div className="flex flex-col relative">
-      <div className="dark:bg-black bg-white w-screen flex items-center justify-between  p-5 sticky top-0 z-10">
+    <div className="flex flex-col relative h-[80px]">
+      <div className="dark:bg-black bg-white w-screen flex items-center justify-between  p-5 fixed top-0 z-10">
         <Logo color="#4338CA" />
         <div className="flex gap-1 relative lg:justify-between lg:w-2/3">
           <div className="flex gap-3">
@@ -69,9 +72,10 @@ export const Header = (props: Props) => {
               />
             </div>
             <div className="flex flex-col relative lg:w-fit w-full lg:static">
-              {searchValue.length != 0 && !place && (
-                <SearchTab array={movies} searchValue={searchValue} />
-              )}
+              {searchValue.length != 0 &&
+                searchParams.get("value") === null && (
+                  <SearchTab array={movies} searchValue={searchValue} />
+                )}
             </div>
           </div>
           <Button variant="outline" size="icon" onClick={onClick}>
@@ -86,25 +90,11 @@ export const Header = (props: Props) => {
           </Button>
         </div>
       </div>
-      <div
-        className="flex sm:hidden justify-between absolute dark:bg-black bg-white w-screen p-5 z-10 -top-[300px] transition duration-500 ease-in-out"
-        style={{
-          transform: isActive ? "translateY(300px)" : "translateY(0px)",
-        }}
-      >
-        <div className="flex gap-2">
-          <Genres isActive={isActive} />
-          <div className="flex items-center justify-around border px-2 rounded-md sm:hidden lg:flex ">
-            <Search size={20} />
-            <Input
-              className="border-none "
-              placeholder="Search ..."
-              onChange={onChange}
-            />
-          </div>
-        </div>
-        <X onClick={() => searchOnClick(false)} />
-      </div>
+      <HiddenSearch
+        onChange={onChange}
+        isActive={isActive}
+        searchOnClick={searchOnClick}
+      />
     </div>
   );
 };

@@ -15,6 +15,7 @@ import { MovieType } from "@/types";
 
 export const BigScreen = () => {
   const [nowPlaying, setNowPlaying] = useState<Array<MovieType>>([]);
+
   const fetchMovies = async () => {
     try {
       const response = await getMoviesInfo(1, "/movie/now_playing");
@@ -48,22 +49,24 @@ export const BigScreen = () => {
               </Link>
               <div className="xl:absolute xl:text-white  left-[200px] flex flex-col gap-1 p-5">
                 <div className="flex justify-between">
-                <div>
-                <p>Now Playing:</p>
-                <h1 className="text-2xl truncate w-[200px]">
-                  <b>{e.title}</b>
-                </h1>
-                </div>
-                <div className="flex items-center gap-3">
-                  <StarIcon color="yellow" fill="yellow" size={24} />
-                  <div className="flex">
-                    <p>{e.vote_average}</p>
-                    <p className="opacity-70">/10</p>
+                  <div>
+                    <p>Now Playing:</p>
+                    <h1 className="text-2xl truncate w-[200px]">
+                      <b>{e.title}</b>
+                    </h1>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <StarIcon color="yellow" fill="yellow" size={24} />
+                    <div className="flex">
+                      <p>{e.vote_average}</p>
+                      <p className="opacity-70">/10</p>
+                    </div>
                   </div>
                 </div>
-                </div>
-                <p className=" w-[380px] h-[100px] whitespace-pre-wrap overflow-hidden text-ellipsis">{e.overview}</p>
-                <PlayButton id={e.id} />
+                <p className=" w-[380px] h-[100px] whitespace-pre-wrap overflow-hidden text-ellipsis">
+                  {e.overview}
+                </p>
+                <PlayButton id={e.id} pageName="bigScreen" />
               </div>
             </div>
           </CarouselItem>

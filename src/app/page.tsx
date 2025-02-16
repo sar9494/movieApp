@@ -1,16 +1,13 @@
 "use client";
-import { Header, BigScreen, SectionTwo, Footer } from "@/components";
+import { BigScreen, SectionTwo } from "@/components";
 
 export default function Home() {
-  
   return (
     <div className="flex flex-col items-center gap-5 relative">
-      <Header />
-      <BigScreen/>
-      <SectionTwo name={"Upcoming"} title={"upcoming"}  />
+      <BigScreen />
+      <SectionTwo name={"Upcoming"} title={"upcoming"} />
       <SectionTwo name={"Popular"} title={"popular"} />
-      <SectionTwo name={"Top Rated"} title={"top_rated"}  />
-      <Footer />
+      <SectionTwo name={"Top Rated"} title={"top_rated"} />
     </div>
   );
 }

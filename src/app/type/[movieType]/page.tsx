@@ -2,7 +2,7 @@
 
 import { MovieType as GeneralMovieType } from "@/types/index";
 import { useState, useEffect } from "react";
-import { MovieBox, Header, Footer, UsePagination } from "@/components";
+import { MovieBox, UsePagination } from "@/components";
 import { useParams, useRouter } from "next/navigation";
 
 export default function Home() {
@@ -20,11 +20,13 @@ export default function Home() {
 
   useEffect(() => {
     getMovies();
+    const params = new URLSearchParams();
+    params.set("page", step.toString());
+    router.push(`/type/${movieType}?${params.toString()}`);
     router.refresh();
   }, [step]);
   return (
     <div className="flex flex-col gap-5 items-center">
-      <Header />
       <div className="w-full max-w-[1200px] flex flex-col gap-10 p-5 ">
         <h1 className="text-3xl lg:text-4xl w-full">
           <b>{movieType === "upcoming" && "Upcoming"}</b>
@@ -39,14 +41,13 @@ export default function Home() {
               url={el.poster_path}
               rating={el.vote_average}
               className="w-[157px] lg:w-[230px]"
-            imgHeigth="h-[234px] lg:h-[335px]"
+              imgHeigth="h-[234px] lg:h-[335px]"
               id={el.id}
             />
           ))}
         </div>
         <UsePagination step={step} setStep={setStep} />
       </div>
-      <Footer />
     </div>
   );
 }
