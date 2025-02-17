@@ -13,15 +13,18 @@ import { PlayButton } from "./index";
 import Link from "next/link";
 import { MovieType } from "@/types";
 
-export const BigScreen = () => {
+export const BigScreen = ({ setLoader }: { setLoader: Function }) => {
   const [nowPlaying, setNowPlaying] = useState<Array<MovieType>>([]);
 
   const fetchMovies = async () => {
     try {
+      setLoader(true);
       const response = await getMoviesInfo(1, "/movie/now_playing");
       setNowPlaying(response.data.results);
     } catch (e) {
       console.error("Failed to fetch movies:", e);
+    } finally {
+      setLoader(false);
     }
   };
 
