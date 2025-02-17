@@ -4,6 +4,7 @@ import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { Suspense } from "react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex felx-col items-center`}
       >
         <ThemeProvider
           attribute="class"
@@ -35,9 +36,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <div className="min-h-[calc(100vh-340px)]">{children}</div>
-          <Footer />
+          <Suspense>
+            <Header />
+            <div className="min-h-[calc(100vh-340px)] max-w-[1300px] w-full ">{children}</div>
+            <Footer />
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

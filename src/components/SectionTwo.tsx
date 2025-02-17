@@ -1,17 +1,19 @@
 import { MovieBox,SeeMore } from "./index";
 import { useEffect, useState } from "react";
 import { MovieType } from "@/types";
-
+import { MoviePages } from "./skeleton/MoviePages";
 type props = {
   name: string;
   title: string;
 };
 export const SectionTwo = (props: props) => {
   const { name, title } = props;
+  const [isLoading, setIsLoading] = useState(false);
   const [movie,setMovie]= useState<Array<MovieType>>([])
 
   const getMovieInfo = async () => {
     try {
+      setIsLoading(true)
       const response1 = await fetch(
        ` https://api.themoviedb.org/3/movie/${title}?language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
       );
@@ -20,13 +22,16 @@ export const SectionTwo = (props: props) => {
     } catch (e) {
       console.log(e);
     }
+    finally{
+      setIsLoading(false)
+    }
   };
   useEffect(()=>{
     getMovieInfo()
   },[])
 
-  return (
-    <div className="flex flex-col w-full xl:w-[1300px] gap-4 overflow-y-auto xl:mt-[50px] p-5">
+  return (<div>
+    {isLoading?(<div className="max-w-[1300px] w-full py-5"><MoviePages size={10}/></div>):(<div className="flex flex-col w-full xl:w-[1300px] gap-4 overflow-y-auto xl:mt-[50px] p-5">
       <div className="flex items-center justify-between ">
         <h1 className="text-3xl">
           <b>{name}</b>
@@ -46,6 +51,7 @@ export const SectionTwo = (props: props) => {
           />
         ))}
       </div>
-    </div>
+    </div>)}
+  </div>
   );
 };

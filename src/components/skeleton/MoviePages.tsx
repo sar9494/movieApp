@@ -1,4 +1,4 @@
-export const MoviePages = () => {
+export const MoviePages = ({size}:{size:number}) => {
   return (
     <div>
       <div className="w-full flex justify-between py-5">
@@ -6,7 +6,7 @@ export const MoviePages = () => {
         <div className="w-[200px] h-[15px] bg-gray-300 dark:bg-gray-700 rounded-md"></div>
       </div>
       <div className="flex flex-wrap gap-5">
-        {Array.from({ length: 10 }).map((el, index) => {
+        {Array.from({ length: size }).map((el, index) => {
           return (
             <div
               key={index}
