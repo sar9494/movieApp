@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex felx-col items-center`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <ThemeProvider
           attribute="class"
@@ -38,7 +38,7 @@ export default function RootLayout({
         >
           <Suspense>
             <Header />
-            <div className="min-h-[calc(100vh-340px)] max-w-[1300px] w-full ">{children}</div>
+            <div className="min-h-[calc(100vh-340px)] ">{children}</div>
             <Footer />
           </Suspense>
         </ThemeProvider>
