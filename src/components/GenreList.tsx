@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getMoviesInfo } from "@/utils/requests";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Badge } from "./ui/badge";
 import {ChevronRight,X} from "lucide-react";
+import axios from "axios";
 type props = {
   pageName: string;
 };
@@ -20,8 +20,8 @@ export const GenreList = (props: props) => {
 
   const getMovieInfo = async () => {
     try {
-      const response1 = await getMoviesInfo(1, "/genre/movie/list");
-      setGenre(response1.data.genres);
+      const res=await axios.get("https://api.themoviedb.org/3/genre/movie/list?language=en&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf")
+      setGenre(res.data.genres);
     } catch (e) {
       console.log(e);
     }

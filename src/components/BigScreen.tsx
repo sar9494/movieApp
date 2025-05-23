@@ -8,10 +8,10 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { StarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getMoviesInfo } from "@/utils/requests";
 import { PlayButton } from "./index";
 import Link from "next/link";
 import { MovieType } from "@/types";
+import axios from "axios";
 
 export const BigScreen = () => {
   const [nowPlaying, setNowPlaying] = useState<Array<MovieType>>([]);
@@ -19,7 +19,10 @@ export const BigScreen = () => {
   const fetchMovies = async () => {
     try {
       setIsLoading(true);
-      const response = await getMoviesInfo(1, "/movie/now_playing");
+       const response = await axios.get("https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf")
+
+      console.log(response);
+      
       setNowPlaying(response.data.results);
     } catch (e) {
       console.error("Failed to fetch movies:", e);
@@ -33,10 +36,7 @@ export const BigScreen = () => {
   }, []);
   return (
     <div>
-      {isLoading ? (
-        <div className="w-full h-[245px] lg:h-[600px] bg-gray-300 dark:bg-gray-700"></div>
-      ) : (
-        <Carousel
+      {isLoading?(<div className="w-[100%] h-[600px]"></div>):( <Carousel
           className="w-screen border-none "
           plugins={[Autoplay({ delay: 5000 })]}
           opts={{
@@ -81,8 +81,8 @@ export const BigScreen = () => {
           </CarouselContent>
           <CarouselPrevious className="absolute left-[50px] hidden xl:flex" />
           <CarouselNext className="absolute right-[50px] hidden xl:flex" />
-        </Carousel>
-      )}
+        </Carousel>)}
+       
     </div>
   );
 };

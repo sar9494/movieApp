@@ -2,8 +2,8 @@
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { MovieBox, UsePagination } from "@/components";
 import { useEffect, useState } from "react";
-import { getMovieSimilarInfo } from "@/utils/requests";
 import { MovieType } from "@/types";
+import axios from "axios";
 
 export default function Movie() {
   const [similarMovie, setSimilarMovie] = useState<Array<MovieType>>();
@@ -12,7 +12,7 @@ export default function Movie() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const getMovieInfo = async () => {
-    const response2 = await getMovieSimilarInfo(movieId, "/similar", step);
+    const response2 = await axios.get(`https://api.themoviedb.org/3/movie/${movieId}/similar?language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`);
     setSimilarMovie(response2.data.results);
   };
   useEffect(() => {

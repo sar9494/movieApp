@@ -20,8 +20,10 @@ export default function Home() {
         )}&page=${step}&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
       );
       const genred = await genre.json();
+      
       setUpcomingMovie(genred.results);
     }catch(e){
+console.log(e);
 
     }finally{
       setIsLoading(false)
@@ -30,10 +32,10 @@ export default function Home() {
   };
   useEffect(() => {
     filteredMovie();
-  }, [searchParams, step]);
+  }, [ searchParams,step]);
   return (
     <div>
-      {isLoading?(<div className="flex items-center flex-col w-screen ">
+     <div className="flex items-center flex-col w-screen ">
       <div className="w-full max-w-[1200px] flex flex-col lg:flex-row p-5">
         <div className="flex flex-col  gap-3">
           <p className="text-3xl">
@@ -49,8 +51,8 @@ export default function Home() {
             <GenreList pageName="genre" />
           </div>
         </div>
-        {upcomingMovie.length != 0 ? (
-          <div className="flex shrink-0 flex-wrap w-full lg:w-[800px]  gap-6 overflow-y-auto">
+        {isLoading?(<div className="w-[70%] py-5"><MoviePages size={20}/></div>):(upcomingMovie.length != 0 ? (
+          <div className="flex shrink-0 flex-wrap w-[70%] lg:w-[800px]  gap-6 overflow-y-auto">
             {upcomingMovie.map((el, index) => (
               <MovieBox
                 key={index}
@@ -65,12 +67,12 @@ export default function Home() {
             <UsePagination step={step} setStep={setStep} />
           </div>
         ) : (
-          <div className="w-[1200px] flex items-center justify-center border m-3 rounded-xl py-10 h-fit">
+          <div className="w-[70%] flex items-center justify-center border m-3 rounded-xl py-10 h-fit">
             <b>No results found.</b>{" "}
           </div>
-        )}
+        ))}
       </div>
-    </div>):(<div className="max-w-[1200px] w-full py-5"><MoviePages size={20}/></div>)}
+    </div>
     </div>
     
   );
