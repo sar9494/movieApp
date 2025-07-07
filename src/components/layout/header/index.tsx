@@ -15,14 +15,21 @@ export const Header = () => {
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState([]);
   const [isActive, setIsActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const searchParams = useSearchParams();
 
   const getMovieInfo = async () => {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${searchValue}&language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
-    );
-    const result = await response.json();
-    setMovies(result.results);
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/search/movie?query=${searchValue}&language=en-US&page=1&api_key=68ddd5c2d68a3e3e8867e8c8a165e3bf`
+      );
+      const result = await response.json();
+      setMovies(result.results);
+    } catch (error) {
+      throw new Error("Error when search movie by name.");
+    } finally {
+      setIsLoading(false);
+    }
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -74,7 +81,11 @@ export const Header = () => {
             <div className="flex flex-col relative lg:w-fit w-full lg:static">
               {searchValue.length != 0 &&
                 searchParams.get("value") === null && (
-                  <SearchTab array={movies} searchValue={searchValue} />
+                  <SearchTab
+                    isLoading={isLoading}
+                    array={movies}
+                    searchValue={searchValue}
+                  />
                 )}
             </div>
           </div>
